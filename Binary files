@@ -1,0 +1,17 @@
+Binary files are hard to understand. When code is written, there are several
+more steps before it becomes software. Some parts of this process are:
+i.  Compiling, which turns human-readable source code into assembly code.
+    Assembly code is difficult for humans to read, but it closely mimics the most
+    basic raw instructions that a computer needs in order to run a program.
+ii. Assembling, which turns assembly code into machine code. Machine code is
+    impossible for humans to read, but this representation is what a computer
+    actually needs to execute.
+
+You can run a program called a disassembler to
+turn them back into assembly code.
+
+Assembly code contains *instructions* which tell a computer how to update
+its own internal memory, and its progress through reading the assembly code
+itself. For instance, the `jmp` instruction means "jump to executing a
+different instruction", and the `add` instruction means "add two numbers and
+store the result in memory
