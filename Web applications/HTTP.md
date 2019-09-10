@@ -65,7 +65,20 @@ You will see details such the request method, the HTTP response code, and other 
 <summary>HTTP Request Methods</summary>
 <br>
   Is an operation you can run on a resourse on the web server.
-  Mpre info: https://www.owasp.org/index.php/Testing_for_HTTP_Verb_Tampering_(OTG-INPVAL-003) 
+  
+  More info: https://www.owasp.org/index.php/Testing_for_HTTP_Verb_Tampering_(OTG-INPVAL-003) 
+   
+   Examining a web pages source code or a protocol analyzer you will be able to see when certain requests are used.
+   
+   For example seeing the code:
+   
+      <form action="webpage/" method=POST>
+      <input type="Submit">
+      
+   As soon as you hit that "Submit" button it will send a POST request. 
+   
+   When you hit enter on the URL box in a browser it will send a GET.
+   
    
     GET
         - Typically only for information retreval (no change in backend)
