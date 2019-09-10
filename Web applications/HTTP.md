@@ -48,6 +48,12 @@ POST
 Tells the server what hostname we are interested in in relation to the page we are requesting.
 This is for servers hosting multiple domains.
 
+example you want to go to example.ca but actually want the server my.server
+The request to example.ca should look like
+
+      Get / http/1.1
+      Host:my.server
+
 ## User agent
 
 Details on the users device that is making the request.
