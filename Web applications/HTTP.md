@@ -123,6 +123,7 @@ You will see details such the request method, the HTTP response code, and other 
    
  ### Basic Authentication
       
+       Note: This is all in place text.
        High view
        
    [![Capture.png](https://i.postimg.cc/fbXL63Z9/Capture.png)](https://postimg.cc/wtqgNj1q)  
@@ -131,8 +132,9 @@ You will see details such the request method, the HTTP response code, and other 
                
    [![Capture1.png](https://i.postimg.cc/Y0V05Q4Q/Capture1.png)](https://postimg.cc/YL6tgGzS)
         
-        Notice the new http header that is added in response to our POST request to the server.
-        The initial POST request does not have this http header portion.
+        Notice the new http header in the 401 unauthorized that was the response to our request to the server.
+        The initial request does not have this http header authentication portion.
+         
         
         WWW.Authenticate: Basic  - the type of HTTP auth
         
@@ -150,6 +152,73 @@ You will see details such the request method, the HTTP response code, and other 
     
     
    ### Digest Authentication
+      
+      Sends Hash of password (digest auth).
+      
+   <details>
+   <summary>   RFC 2069 - General/original Digest Auth</summary>
+   <br>
+            Client - Server header communication for Digest Auth.
+     
+   [![Capture.png](https://i.postimg.cc/RZNK6wJt/Capture.png)](https://postimg.cc/G4nH68Q3)
+      
+       Calculating the "Response" portion of the header.
+      
+      Hash1 = MD5(Username:Realm:Password)
+      Hash2 = MD5(Request method:URI)
+      Response = MD5(Hash1:Nonce:Hash2)
+      
+      Note that opaque does nothing in RFC 2069 in creating the response.
+      
+   [![1.png](https://i.postimg.cc/yN5KPgP2/1.png)](https://postimg.cc/kVxLM5Ly)
+   --------------------------------------------------------------------------------
+   [![2.png](https://i.postimg.cc/xCHw3sqb/2.png)](https://postimg.cc/vgY2QtrQ)
+   
+   --------------------------------------------------------------------------------
+       
+       401 response with bad credentials
+   
+   [![3.png](https://i.postimg.cc/63sSqdz6/3.png)](https://postimg.cc/Ny4bP2WZ)
+      --------------------------------------------------------------------------------
+      
+       200 OK response sent by the server if the credentials are good. 
+   </details>
+  
+       
+   
+   ### HTTP Digest Authentication RFC 2617
+   
+    adds client nonce to help mitigate chosen plain text attacks
+    
+    adds Quality of Protection (QOP) 
+      - auth for Authentication and auth-int for Authentication and Integrity (rarely used and not well supported)
+      
+     
+      
+   <details>
+   <summary>More details for Digest Auth Hashing RFC 2069</summary>
+   <br>
+      Hash1 = MD5(Username:Realm:Password)
+      Hash2 = MD5(Request method:URI)
+      Response = MD5(Hash1:Nonce:Hash2)
+   
+   Creating HTTP Digest Auth hash response for RFC 2069 in Python
+   
+   import hashlib
+   
+   hash1 = hashlib.md5('USER:Realm:Password').hexdigest()
+   
+   hash2 = hashlib.md5('Request method:URI').hexdigest()
+   
+   nounce = XYZ
+   
+   response_string = hash1 + ':' + nonce + ':' + hash2
+   
+   response = hashlib.md5(response_string).hexdigest() 
+   </details>
+   
+      
+      
       
 </details>
 
