@@ -29,13 +29,15 @@
 ----------------------------------------------------------------------
 ### HTTP response codes:
 
-200 - OK
+1xx - Information
 
-300 - Redirect
+2xx - OK
 
-400 - Bad request
+3xx - Redirect
 
-500 - Issue on the server side
+4xx - Bad client request (bad req or not authorized)
+
+5xx - Issue on the server side
 
 ### Request methods
 
@@ -114,7 +116,40 @@ You will see details such the request method, the HTTP response code, and other 
 </details>
 
 
-
+<details>
+<summary>Authentication in HTTP</summary>
+<br>
+   Only two types of auth in the HTTP standard.
+   
+      Basic Authentication
+      
+       High view
+       
+   [![Capture.png](https://i.postimg.cc/fbXL63Z9/Capture.png)](https://postimg.cc/wtqgNj1q)  
+               
+----------------------------------------------------------------------------------------               
+               
+   [![Capture1.png](https://i.postimg.cc/Y0V05Q4Q/Capture1.png)](https://postimg.cc/YL6tgGzS)
+        
+        Notice the new http header that is added in response to our POST request to the server.
+        The initial POST request does not have this http header portion.
+        
+        WWW.Authenticate: Basic  - the type of HTTP auth
+        
+        realm= "" - Set up by admin
+        
+         This tells the browser on the client what is being used and how to respond with creds.
+         
+  [![Captu2re.png](https://i.postimg.cc/wTw3Y8N9/Captu2re.png)](https://postimg.cc/2VBCntTt)        
+         
+         In the client response there is now an Authorization header with the credentials.
+         The base64 encoded line beside Authorization is the username and pass combined together and encoded.
+   
+         The next server response is either a 401 unauthorized or 200 success.
+          
+      Digest Authentication
+      
+</details>
 
 
 
