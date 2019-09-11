@@ -121,7 +121,7 @@ You will see details such the request method, the HTTP response code, and other 
 <br>
    Only two types of auth in the HTTP standard.
    
-      Basic Authentication
+ ### Basic Authentication
       
        High view
        
@@ -147,7 +147,9 @@ You will see details such the request method, the HTTP response code, and other 
    
          The next server response is either a 401 unauthorized or 200 success.
           
-      Digest Authentication
+    
+    
+   ### Digest Authentication
       
 </details>
 
