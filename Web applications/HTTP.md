@@ -182,18 +182,6 @@ You will see details such the request method, the HTTP response code, and other 
       --------------------------------------------------------------------------------
       
        200 OK response sent by the server if the credentials are good. 
-   </details>
-  
-       
-   
-   ### HTTP Digest Authentication RFC 2617
-   
-    adds client nonce to help mitigate chosen plain text attacks
-    
-    adds Quality of Protection (QOP) 
-      - auth for Authentication and auth-int for Authentication and Integrity (rarely used and not well supported)
-      
-     
       
    <details>
    <summary>More details for Digest Auth Hashing RFC 2069</summary>
@@ -216,6 +204,21 @@ You will see details such the request method, the HTTP response code, and other 
    
    response = hashlib.md5(response_string).hexdigest() 
    </details>
+      
+   </details>
+  
+       
+   
+   ### HTTP Digest Authentication RFC 2617
+   
+    adds client nonce to help mitigate chosen plain text attacks
+    
+    adds Quality of Protection (QOP) 
+      - auth for Authentication and auth-int for Authentication and Integrity (rarely used and not well supported)
+      
+     
+      
+  
    
       
       
