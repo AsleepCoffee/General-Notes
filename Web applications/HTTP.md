@@ -1,4 +1,4 @@
-## HTTP (hyper text transfer protocol)
+# HTTP (hyper text transfer protocol)
 
 - Layer 7 protocol 
 
@@ -121,8 +121,11 @@ You will see details such the request method, the HTTP response code, and other 
 <br>
    Only two types of auth in the HTTP standard.
    
- ### Basic Authentication
-      
+ <details>
+ <summary>Basic Authentication</summary>
+ <br>
+  
+  
        Note: This is all in place text.
        High view
        
@@ -148,15 +151,15 @@ You will see details such the request method, the HTTP response code, and other 
          The base64 encoded line beside Authorization is the username and pass combined together and encoded.
    
          The next server response is either a 401 unauthorized or 200 success.
-          
-    
-    
-   ### Digest Authentication
-      
+ </details>            
+ 
+ <details>
+ <summary>Digest Authentication</summary>
+ <br>       
       Sends Hash of password (digest auth).
       
    <details>
-   <summary>   RFC 2069 - General/original Digest Auth</summary>
+   <summary>RFC 2069 - General/original Digest Auth</summary>
    <br>
             Client - Server header communication for Digest Auth.
      
@@ -208,23 +211,88 @@ You will see details such the request method, the HTTP response code, and other 
    </details>
   
        
+   <details>
+   <summary>RFC 2617 Updated</summary>
+   <br>
    
-   ### HTTP Digest Authentication RFC 2617
-   
-    adds client nonce to help mitigate chosen plain text attacks
+   adds client nonce to help mitigate chosen plain text attacks
     
-    adds Quality of Protection (QOP) 
-      - auth for Authentication and auth-int for Authentication and Integrity (rarely used and not well supported)
+   adds Quality of Protection (QOP) 
+       **auth** for Authentication and **auth-int** for Authentication and Integrity (rarely used and not well supported)
       
      
+   Cient first req will be returned with: 
       
-  
+      HTTP/1.1 401 Unauthorized
+      WWW-Authenticate: Digest
+               realm="testreal@host.com",
+               qop="auth,auth-int",
+               nonce="dcd9add909da90d9asd09as0d93",
+               opaque="5ccc78086978df7d0f98e41"
+               
+     
+   The client will be prompted to enter credentials and send the following request ot the server.
    
+        Authorization: Digest username= "username",
+               realm="testreal@host.com",
+               nonce="dcd9add909da90d9asd09as0d93",
+               uri="/dir/login",        #path to resource
+               qop=auth,                #the QOP we support
+               nc=00000001,             #Counter
+               cnonce="0a4f113b"        #Client nonce
+               response="dodho9her89ehrslinfdsd3fjfpw9jfw9"
+               opaque="5ccc78086978df7d0f98e41"
       
-      
-      
+  <details>
+  <summary>Response calculation</summary>
+  <br>
+     Hash1 = MD5(username:realm:password)
+     Hash2 = MD5(method:URI)
+     Response = MD5(Hash1:Nonce:NonceCount:CNonce:QOP:Hash2)
+  </details>
+  </details>
+ 
+ </details>       
 </details>
 
+<details>
+<summary>Statlessness and cookies</summary>
+<br>
+  Http is stateless protocol.
+  Each request is independent.
+  Servers do not keep track.
+  
+  One of the ways this is solved is with cookies.
+  
+  <details>
+  <summary>Cookies</summary>
+  <br>
+    - allows server to stores and retrive data from client (browser)
+    - stored in browsers temp directories
+    - Text only, no executable code
+    - Cannot exceed 4K in size
+    - Allows for retaining stat with the clients help
+      - Session management 
+      - User preferences
+  
+  
+   The server will have the header "Set-Cookie <name>=<value>; expires=<date>; domain=<domain>; path=<resource>; secure; httponly"
+    
+   The client will respond with just use "Cookie: <name>=<value>" when communicating with the server.
+  
+  **Expire:** When the browser should go and delete and exsponge the cookie. The expiary date that is set on the cookie also determines how the cookie is stored, shorter will go in temp and longer will be held elsewhere.
+      A browser with no expirary is a **session cookie** and the remove the cookie when the browser is closed(the only time it may be mentioned is if it were to be retained across browser restarts).In RFC 6265 adds **Max-Age** parameter which is the interval in seconds after receiving the cookie that is should be deleted. 
+   
+  **Domain:** sub domain where the cookie is valid.
+   
+  **PATH**  resource(path) where cookie should be sent.
+   
+  **Secure:** Only sent over HTTPS (cookie will not be sent if talking to the server using HTTP)
+  
+  **httponly:** Cannot be accessed by Client side scrips directly. Cannot be scripted using Javascript. Is an XSS mitigation technique. 
+  
+  </details>
+</details>
 
 
 
