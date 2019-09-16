@@ -291,6 +291,15 @@ You will see details such the request method, the HTTP response code, and other 
   
   **httponly:** Cannot be accessed by Client side scrips directly. Cannot be scripted using Javascript. Is an XSS mitigation technique. 
   
+  <details>
+  <summary>Session ID</summary>
+  <br>
+  
+  
+  </details>
+   
+  
+  
   </details>
 </details>
 
