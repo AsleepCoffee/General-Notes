@@ -305,7 +305,18 @@ You will see details such the request method, the HTTP response code, and other 
 
 
 
-
+<details>
+<summary>HTTPS TLS cipher suite communication</summary>
+<br>
+   In 'Client hello' the client advertises the Cipher suite to server that it supports. 
+   
+   for example:
+   
+         TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256
+          ^  |         |      |     |  |       |
+         TLS Key exchange     Encrypt   Hashing
+  
+</details>
 
 
 
