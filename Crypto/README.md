@@ -85,21 +85,38 @@ The ability for XOR to reverse itself makes it massively important part of crypt
    Key length is equal to the number of bits in an encryption algorithm’s key. Longer the better. But does not mean better security. The key length determines the maximum number of combinations required to break an encryption algorithm. If the key length is 40 bits long, then there are 240 possible keys.
   
  - AES (Advances Encryption Standard)
+   Symmetric
+   Key Length: 128, 192, 256
  
  - CAST5: 
+   Symmetric
+   Key Length: 128
    
 </details>
     
 ---------------------------------------------------------------------------------------------
 
+<details>
+   <summary>Modes of operation</summary>
+   <br>
+A block cipher mode of operation is an algorithm that uses a block cipher to provide information security such as confidentiality or authenticity.
 
+</details>
 
-
+---------------------------------------------------------------------------------------------
 
 <details>
    <summary> </summary>
    <br>
 
+
 </details>
     
-  
+---------------------------------------------------------------------------------------------
+
+<details>
+   <summary> </summary>
+   <br>
+
+
+</details>
