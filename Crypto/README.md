@@ -111,6 +111,12 @@ A block cipher mode of operation is an algorithm that uses a block cipher to pro
    <br>
 
  Used to for secure data transmission.
+ 
+ RSA: 
+ 
+ DSA(Digital Signatrure Algorithm):
+ 
+ ECDSA(Elliptic Curve Digital Signature Alogrithm):
 
 </details>
     
