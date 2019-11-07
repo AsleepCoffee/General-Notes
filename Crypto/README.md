@@ -17,6 +17,7 @@ The ability for XOR to reverse itself makes it massively important part of crypt
 1 ^ 1 == 0
 
 </details>
+
 ---------------------------------------------------------------------------------------------
 
 <details>
@@ -39,6 +40,7 @@ The ability for XOR to reverse itself makes it massively important part of crypt
       - CBC (Cipher Block Chaining)
          Most common. Each plaintext block is XORed with the ciphertext of the previous block before encryption. Reverse is preformed for decryption. The first block is XORed with the IV (Initilization Vector)
 </details>
+
 ---------------------------------------------------------------------------------------------
 
 </details>
@@ -56,6 +58,7 @@ The ability for XOR to reverse itself makes it massively important part of crypt
     - SHA1
     - SHA2
 </details>
+
 ---------------------------------------------------------------------------------------------
 
 <details>
@@ -71,6 +74,7 @@ The ability for XOR to reverse itself makes it massively important part of crypt
   - HMAC(key, message) = hash(key + hash(key + message))
   - Keys are padded seperately in each run of the hash algorithm.
 </details>
+
 ---------------------------------------------------------------------------------------------
 
 <details>
