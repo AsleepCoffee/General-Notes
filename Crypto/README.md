@@ -110,6 +110,7 @@ A block cipher mode of operation is an algorithm that uses a block cipher to pro
  </summary>
    <br>
 
+ Used to for secure data transmission.
 
 </details>
     
