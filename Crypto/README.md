@@ -106,7 +106,8 @@ A block cipher mode of operation is an algorithm that uses a block cipher to pro
 ---------------------------------------------------------------------------------------------
 
 <details>
-   <summary> </summary>
+   <summary>Signature Algorithms
+ </summary>
    <br>
 
 
