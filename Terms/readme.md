@@ -6,4 +6,7 @@ Federation:
     
  IDP: 
  
-   Idnetity Provider. An entity that create, maintains, and manages authetications for SPs/RPs.
+   Idnetity Provider. An entity that create, maintains, and manages authetications for SPs/RPs. SP/RP does not care how the IDP operates, only that a trusted response is recived. 
+
+
+   
