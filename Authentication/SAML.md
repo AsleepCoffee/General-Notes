@@ -31,6 +31,8 @@ RP/IDP initiated. Where the login starts. Start RP/SP that then sends SAML reque
 
 # IDP configuration
 
+ The IdP needs to be configured so it knows where and how to send users when they want to log in to a specific SP. 
+
  **EntityID** - A globally unique name for the SP. Formats vary, but it’s increasingly common to see this value formatted as a URL.
 
     Example: <EntityDescriptor entityID="https://lego.ca/home">
@@ -55,3 +57,33 @@ RP/IDP initiated. Where the login starts. Start RP/SP that then sends SAML reque
     Beer Example: “After the Beer Tent approves of your wristband, ask for a lager.”
 
 **SAML Signature Algorithm** - SHA-1 or SHA-256. Less commonly SHA-384 or SHA-512. This algorithm is used in conjunction with the X.509 certificate mentioned below.
+
+
+# SP Configuration
+
+ So the SP/RP can proces information provided by the IDP and set at the SP.
+ 
+ **X.509 Certificate** - A certificate provided by the IdP, used to verify the public key as passed by the IdP in the metadata of the SAML assertion. It allows the SP to verify the SAML assertion is actually coming from the IdP it trusts. SAML assertions are usually signed, however SAML requests can also be signed. Typically, it’s downloaded or copied from the IdP and configured by uploading or pasting it to into the SP.
+
+**Issuer URL** - Unique identifier of the IdP. Formatted as a URL containing information about the IdP so the SP can validate that the SAML assertions it receives are issued from the correct IdP.
+
+    Example: <saml:Issuer>https://bricks.ca/saml2/idp/metadata.php</saml:Issuer>
+
+**SAML SSO Endpoint / Service Provider Login URL** - An IdP endpoint that initiates authentication when redirected here by the SP with a SAML request.
+
+**SAML SLO (Single Log-out) Endpoint** - An IdP endpoint that will close the user’s IdP session when redirected here by the SP, typically after the user clicks “Log out.”
+
+    Real Example: https://bicks.ca/logout
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
