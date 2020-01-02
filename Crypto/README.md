@@ -27,14 +27,15 @@ The ability for XOR to reverse itself makes it massively important part of crypt
   ### Ciphers
 
 - Symmetric -- Both sides share the same key
+
    - Stream -- Encrypts data byte-by-byte
-   - Block -- Encrypts data block-by-block
+   - Block -- Encrypts data block-by-block 
    
 - Asymmertric  -- Each side has their own private key and private key
    - Recipients public key is used to encrypt, and their private key is used to decrypt.
    - Typically used to transfer symmetric keys rather than data due to proformance.
    
-   - Block cipher modes
+   - Block cipher mode of operation
       - ECB (Electronic Codebook)
         Each block is independently encrypted, meaning each same two blocks will have the same cipher text.
       - CBC (Cipher Block Chaining)
@@ -50,7 +51,7 @@ The ability for XOR to reverse itself makes it massively important part of crypt
   
   ### Hashes
 
- - takes input and outputs a fixed size output.
+ - takes input and outputs a fixed size output called a digest.
  - Due to any size input and fixed out, collisions are a going to happen
  - Strength of a hash algorithm is in how hard it is to produce a collision.
  - Hash functions 
@@ -82,8 +83,11 @@ The ability for XOR to reverse itself makes it massively important part of crypt
    <br>
     
   ## Keys
+  
    Key length is equal to the number of bits in an encryption algorithm’s key. Longer the better. But does not mean better security. The key length determines the maximum number of combinations required to break an encryption algorithm. If the key length is 40 bits long, then there are 240 possible keys.
   
+ ## Algorithms
+ 
  - AES (Advances Encryption Standard)
    Symmetric
    Key Length: 128, 192, 256
@@ -99,8 +103,15 @@ The ability for XOR to reverse itself makes it massively important part of crypt
 <details>
    <summary>Modes of operation</summary>
    <br>
+   
 A block cipher mode of operation is an algorithm that uses a block cipher to provide information security such as confidentiality or authenticity.
 
+   - Block cipher mode of operation
+      - ECB (Electronic Codebook)
+        Each block is independently encrypted, meaning each same two blocks will have the same cipher text.
+        
+      - CBC (Cipher Block Chaining)
+         Most common. Each plaintext block is XORed with the ciphertext of the previous block before encryption. Reverse is preformed for decryption. The first block is XORed with the IV (Initilization Vector)
 </details>
 
 ---------------------------------------------------------------------------------------------
@@ -146,10 +157,21 @@ A block cipher mode of operation is an algorithm that uses a block cipher to pro
 ---------------------------------------------------------------------------------------------
 
 <details>
-   <summary>SSL/TLS</summary>
+   <summary>Cipher suite</summary>
    <br>
-   <p>https://tls.ulfheim.net/</p>
+  A cipher suite is a set of algorithms that help secure a network connection that uses TLS/SSL.
+   
+   An example of a cipher suite name: TLS_RSA_WITH_AES_128_GCM_SHA
 
+  - TLS defines the protocol that this cipher suite is for.
+  
+  - RSA indicates the key exchange algorithm being used.
+  
+  - AES_128 indicates the block/stream cipher being used to encrypt the message stream...
+  
+  - GCM The block cipher mode of operation.
+  
+  - SHA indicates the hash algorithm which is used to authenticate a message.
 
 </details>
 
