@@ -21,25 +21,30 @@ The ability for XOR to reverse itself makes it massively important part of crypt
 ---------------------------------------------------------------------------------------------
 
 <details>
-   <summary>Ciphers</summary>
+   <summary>Key Ciphers</summary>
    <br>
    
   ### Ciphers
 
 - Symmetric -- Both sides share the same key
 
+  Can use either stream or block ciphers.
+
    - Stream -- Encrypts data byte-by-byte
    - Block -- Encrypts data block-by-block 
    
-- Asymmertric  -- Each side has their own private key and private key
+- Asymmertric  -- (aka public key) Each side has their own private key and private key
    - Recipients public key is used to encrypt, and their private key is used to decrypt.
    - Typically used to transfer symmetric keys rather than data due to proformance.
    
-   - Block cipher mode of operation
-      - ECB (Electronic Codebook)
-        Each block is independently encrypted, meaning each same two blocks will have the same cipher text.
-      - CBC (Cipher Block Chaining)
-         Most common. Each plaintext block is XORed with the ciphertext of the previous block before encryption. Reverse is preformed for decryption. The first block is XORed with the IV (Initilization Vector)
+   ## Two main uses of Asymmertric
+  
+  Two of the best-known uses of public key cryptography are:
+
+   - Public key encryption: in which a message is encrypted with a recipient's public key. The message cannot be decrypted by anyone who does not possess the matching private key, who is thus presumed to be the owner of that key and the person associated with the public key. This is used in an attempt to ensure confidentiality.
+    
+   - Digital signatures: in which a message is signed with the sender's private key and can be verified by anyone who has access to the sender's public key. This verification proves that the sender had access to the private key, and therefore is likely to be the person associated with the public key. This also ensures that the message has not been tampered with, as a signature is mathematically bound to the message it originally was made with, and verification will fail for practically any other message, no matter how similar to the original message.
+  
 </details>
 
 ---------------------------------------------------------------------------------------------
