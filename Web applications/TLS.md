@@ -24,6 +24,29 @@
  # Visual walkthrough of TLS 1.2 session 
  
   https://tls.ulfheim.net/
+  
+ # Certificates
+ 
+  Certificates facilitate an encrypted connection between a browser and a web server while also authenticating the identity of the website that owns the cert.
+  
+  This will contain the cipher suite information. 
+  
+# Cipher suite 
+
+  A cipher suite is a set of algorithms that help secure a network connection that uses TLS/SSL.
+   
+   An example of a cipher suite name: TLS_RSA_WITH_AES_128_GCM_SHA
+
+  - TLS defines the protocol that this cipher suite is for.
+  
+  - RSA indicates the key exchange algorithm being used.
+  
+  - AES_128 indicates the block/stream cipher being used to encrypt the message stream...
+  
+  - GCM The block cipher mode of operation.
+  
+  - SHA indicates the hash algorithm which is used to authenticate a message.
+
  
  # Versions
  
