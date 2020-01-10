@@ -215,10 +215,29 @@ if
    
     s.connect((HOST,PORT))
  
+    socket.setdefaulttimeout(1) #timeout on port connect attempt, then move on
+    
+   Error examples 
+     
+     try: 
+     
+     except socket.gaierror:
+       print("Hostname could not be resolved")
+       sys.exit()
+   
+     except socket.error:
+        print("could not connect to server")
+        sys.exit()  
+    
  
- 
- 
- 
+  ### Keyboard interupt
+  
+    try:
+        
+    except KeyboardInterrupt:
+       print("\n Exiting program")
+      sys.exit()
+  
  
  
  
