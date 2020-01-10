@@ -170,7 +170,59 @@ if
          print(i)
          i += 1
          
-      
+  ### Advanced strings
+  
+ Using list logic to print specific characters in a sting.
+ 
+ test = "This is a test"
+ 
+ print(test[:2])  # print characters 0 to 2
+ 
+ .split #splits strings up based on a delimiter 
+ 
+ .join #joins a string together based on a delimiter
+ 
+ \ #escape special characters
+ 
+ {}  .format(<variable>)  #will place the variable inside the curly brackets.
+ 
+ 
+ ### Dictionaries - key/values {}
+ 
+     var = {"coke": 3, "sprite": 4,}     #drink is key, price is value
+  
+  #Can have multiple values to one key
+  
+     work = {"HR": ["user1", "user2"], "IT": ["user3", "user4"]}
+   
+   #Adding new key and value pair 
+   
+     work[HR] = ["user5"] 
+     
+     work.update({"Network": ["User1", "User2"]})
+     
+ 
+  
+  ### Sockets - Used to connect to open ports 
+ 
+    import socket
+   
+    host = 'X.X.X.X'
+ 
+    port = Y
+   
+    s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)  #AF_INET basically means IPv4, SOCK_STREAM for port
+   
+    s.connect((HOST,PORT))
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
       
       
       
