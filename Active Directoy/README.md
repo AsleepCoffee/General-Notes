@@ -23,6 +23,11 @@ Can exploit without any missing patches but with how active directory works and 
   - Replicate updates to other domain controllers in the domain and forest
 
   - Allow admin access to manage user accounts and network resources 
+  
+ 
+ Here is a look at the privileges of a domain admin. 
+
+![Domain admin priv](https://user-images.githubusercontent.com/46513413/73541084-909ab180-43ff-11ea-8827-0467ac08dbce.png)
 
 
 **AD DS Data Store**
@@ -55,7 +60,7 @@ Can exploit without any missing patches but with how active directory works and 
  
  - An authentication and authorization boundry that provides a way to limit the scope of access to resources
  
- 
+ ![Domain (copy)](https://user-images.githubusercontent.com/46513413/73541086-91cbde80-43ff-11ea-965e-9447db62e01f.png)
  
  **Trees**  
    
@@ -86,7 +91,6 @@ Can exploit without any missing patches but with how active directory works and 
   - Share the Enterprise Admins and Schema Admins group
   
   
-  
  
  **Organizational Units (OUs)**
   
@@ -100,6 +104,7 @@ Can exploit without any missing patches but with how active directory works and 
   
   - Apply policies
   
+  ![Domain](https://user-images.githubusercontent.com/46513413/73541081-8f698480-43ff-11ea-890e-4bbef41cbcab.png)
   
   **Trusts**
   
@@ -118,6 +123,8 @@ Can exploit without any missing patches but with how active directory works and 
  - Users, groups, contacts, computers, printers, shared folders. InetOrgPerson(Similar to user account, used for compatibility with other directory services)
   
   
+![Objects](https://user-images.githubusercontent.com/46513413/73541088-92fd0b80-43ff-11ea-9729-9ff1384debd5.png)
+
   
   
 
