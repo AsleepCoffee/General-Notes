@@ -12,4 +12,6 @@
 
 
 
+Random notes:
 
+DC will contains a hidden account called KRBTGT, which is the account that encrypts all of the other tickets. A golden ticket gives you domain admin credentials to any computer on the network that doesn’t expire.
