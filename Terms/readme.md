@@ -1,5 +1,10 @@
 # Termonology
 
+Operands: 
+
+   In computer programming, an operand is a term used to describe any object that is capable of being manipulated. For example, in "1 + 2" the "1" and "2" are the operands and the plus symbol is the operator.
+     
+
 Bitwise operations: 
 
   When a computer directly manipulates bits. Use alot in network and assembly programming.
