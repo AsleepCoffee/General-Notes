@@ -7,7 +7,7 @@ The signals are interpreted as bits that make up the info.
 
 Packets have a header and a payload
 
-
+Frames are layer 2 packets.
 
 # Application layers (OSI)
 
