@@ -52,6 +52,10 @@ Routing tables are tables that a router looks at when it is deterining what inte
 The router will look down the table until one matches or else the packet is dropped. A default route can be defined to say that if none other match , send it to this interface.
 
 
+# Ports
+
+**Well-known** 0-1023  (Assigned by IANA)
+
 
 
 
