@@ -1,4 +1,4 @@
-### Notes
+# Notes
 
 Goal of networking is to exchange info between networked computers, which the info is carried by packets. 
 
@@ -9,7 +9,7 @@ Packets have a header and a payload
 
 
 
-## Application layers (OSI)
+# Application layers (OSI)
 
 Each layer has its own protocol that talk to the one lower or higher to each other (depending if info is being sent or recieved) called encapsulation. 
 
@@ -45,7 +45,11 @@ Three addr types:
   - Link local - reside on internal networks. Not routed
 
 
+# Routing 
 
+Routing tables are tables that a router looks at when it is deterining what interface to forward a packet out of after looking at its dest header.
+
+The router will look down the table until one matches or else the packet is dropped. A default route can be defined to say that if none other match , send it to this interface.
 
 
 
