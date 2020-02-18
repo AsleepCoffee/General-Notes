@@ -8,6 +8,36 @@
 
 - Resources are identified by URI/URL
 
+- HTTP works on top of TCP protocol 
+     - client and server establish a TCP connection first, then the client sents HTTP request
+  
+<details>
+<summary>Format</summary>
+<br>   
+      \r (carriage return) \n (newline)
+    
+      Headers\r\n
+      \r\n
+      Message\r\n
+      
+      
+      GET/ HTTP/1.1
+      
+      Host: www.elearnsecurity.comUser-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) 
+      
+      Accept: text/html
+      
+      Accept-Language: en-US,en;q=0.5
+      
+      GET/ HTTP/1.1Host: www.elearnsecurity.comUser-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Firefox/31.0 Iceweasel/31.2.0Accept: text/htmlAccept-Language: en-US,en;q=0.5Accept-Encoding: gzip, deflateConnection: keep-aliveAccept-Encoding: gzip, deflate
+      
+      Connection: keep-alive
+      
+      
+      
+      
+</details>
+
 <details>
 <summary>The two versions of HTTP</summary>
 <br>
@@ -65,6 +95,16 @@ Details on the users device that is making the request.
 When you make basic a request to www.example.ca, you are making a GET request for / of example.ca.
 
 You will see details such the request method, the HTTP response code, and other detials related to the request and response with the HTTP server.
+
+## Accept 
+
+ The browser sends the Accept header field to specify which document type it is expecting in response.
+ 
+## Accept-Language
+
+ The browser can asl for a specific language in the response
+ 
+
 
 ----------------------------------------------------------------------
 </details>
