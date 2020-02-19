@@ -1,3 +1,4 @@
+## Programming
 
 Programming langauges can be divided into two main group: 
 
@@ -18,9 +19,13 @@ Programming langauges can be divided into two main group:
 The level can tell how close they are to the hardware.
 
 
+## Programming vs scripting
 
+ High level programming languages consist of programming languages and scripting languages.
 
-
+   Programming languages require a compiler. After writing code you use a compiler to convert the plain-text code into something unreadable to a human, but still readable by the language environmnet. Such as Java or C++
+   
+   Scripting languages are usually interpreted, the software environment on your PC cna read a plain-text program file and execute the instructions without having to change the file. Examples: Visual Basic and partially Python.
 
 
 
