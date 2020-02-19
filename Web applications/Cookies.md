@@ -6,9 +6,6 @@
   
   One of the ways this is solved is with cookies.
   
-  <details>
-  <summary>Cookies</summary>
-  <br>
     - allows server to stores and retrive data from client (browser)
     - stored in browsers temp directories
     - Text only, no executable code
@@ -40,10 +37,10 @@ The server will have the header
   
   **httponly:** Cannot be accessed by Client side scrips directly. Cannot be scripted using Javascript, Flash, Java and any other non-HTML tech from reasing the cookie. Is an XSS cookie stealing mitigation technique. 
   
-  <details>
-  <summary>Sessions</summary>
-  <br>
-   
+  
+## Sessions 
+
+
    Sessions are transfered as cookies. Once set, the session ID can then be used in subsequent requests. 
    
    Good for enumeration:
