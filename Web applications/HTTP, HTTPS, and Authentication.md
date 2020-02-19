@@ -120,7 +120,7 @@ You will see details such the request method, the HTTP response code, and other 
 </details>
 
 <details>
-<summary>HTTP responset break down</summary>
+<summary>HTTP response break down</summary>
 <br>
      A server will receive a request, it processes it and then sends an HTTP response to the client.
      
