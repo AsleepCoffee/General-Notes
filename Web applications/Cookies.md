@@ -1,8 +1,5 @@
 # Cookies
 
-<details>
-<summary>Statlessness and cookies</summary>
-<br>
   HTTP is stateless protocol.
   Each request is independent.
   Servers do not keep track.
@@ -57,6 +54,3 @@ The server will have the header
      
      However as these names can be changes, this is not set in stone.
   
-  </details>
-  </details>
-</details>
