@@ -104,9 +104,44 @@ You will see details such the request method, the HTTP response code, and other 
 
  The browser can asl for a specific language in the response
  
+## Accept-Encoding
 
+ Similar, but restricts content encoding, not the content itself
+ 
+ ## Connection
+ 
+  Allows the sender to specify options that are desired for that particular connection.
+  
+     close: 
+     
+     keep-alive: Future communications with the server will reuse the current connection. 
 
 ----------------------------------------------------------------------
+</details>
+
+<details>
+<summary>HTTP responset break down</summary>
+<br>
+     A server will receive a request, it processes it and then sends an HTTP response to the client.
+     
+   The header and page content are seperated with two empty lines (\r\n\r\n)
+   
+   ## Response breakdown: 
+   
+   **Status-line:** protocol version, HTTP status
+   
+   **Date:** date and time at which the message was originated
+   
+   **Cache-Control:** Informs the client about cached content. Using cached content saves bandwidth, prevents re-requesting nmodified content.
+   
+   **Content-Type:** lets the client know how to interpret the body of the message
+   
+   **Content-Encoding:** Extends Content-Type
+   
+   **Server:** Contains the header of the server that generated the content.
+   
+   **Content-Length:** Indicated the length, in bytes, of the message body.
+     
 </details>
 
 <details>
