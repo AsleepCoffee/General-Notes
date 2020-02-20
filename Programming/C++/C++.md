@@ -27,13 +27,25 @@
     int main ()
     { Function body
     }
-    
+
+### Input/Output
+
 **cout**   
    
    Is the name of the standard output. Most of the time, the standard output is the console. The cout<<statement tells the compiler to put a sequence of characters, ‘Hello World!’ in our example, onto the standard output stream (the console). In other words, it prints the string ‘Hello World!’on the screen.
    
     cout << "string";
-   
+    
+    << tells the program to insert the nest data into the stream.
+  
+    endl  inserts a new line character and flushes the buffer. Next output will print on the next line.
+    
+    cin >>   to get the users input
+    
+    
+    cin.ignore();  will clear the buffer from user input. Following one will prevent use program from closing. 
+______________________________________________________________________________________  
+  
 **Return:**
   
    Causes the main function to end. The return statement can have different values.
@@ -58,9 +70,9 @@
    
     global: Declared in the body of the source code (not in a function) and can be referred from anywhere.
     
-    local:
+    local: Declared inside a function body or block enclosed in curly brackets “{}” (main function in our case) and their scope is limited to the block where they are declared.
  
 **Other:**
 
-  - cin.ignore();  output will no longer have the "press any button to continue"
+  -   output will no longer have the "press any button to continue"
    
