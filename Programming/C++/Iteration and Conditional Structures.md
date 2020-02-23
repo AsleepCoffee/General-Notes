@@ -40,3 +40,54 @@ Three main statements:
        default
           statement sequence
      }
+
+<img width="804" alt="1" src="https://user-images.githubusercontent.com/46513413/75103156-017b5680-55c5-11ea-8e39-54443d683c13.PNG">
+
+
+## Iteration
+
+ Iteration statements, also called loops allow a set of instructions to be executed repeatedly for a fixed number of times or until a certain condition is reached. While in for loops the condition is predefined, in do-while loops are open-ended.
+ 
+ **for**
+ 
+ <img width="830" alt="1" src="https://user-images.githubusercontent.com/46513413/75103184-5a4aef00-55c5-11ea-8754-e08b07db9e6e.PNG">
+
+ 
+  for loop can be infinite by leaving initialization, condition,and increment empty. 
+  
+      for( ; ; ) {
+          statement;
+      }
+ 
+ When the conditional expression is left empty, it is processed as true. Note that the for( ; ; ) construct can exit from an infinite loop through a breakstatement present anywhere in the body of the loop. The break statement causes the termination of the loop, and the program control resumes from the next instruction following the loop.
+ 
+ In the same way as with other statements, for loops can be nested. Nested loops are very common in programming since they add power and flexibility to complex algorithms.
+ 
+**while**
+
+The loop continues while the condition evaluates to true. When the condition evaluates to false, the program control goes to the line of code right after the loop
+
+     while(condition) {
+       statement;
+      }
+ 
+ <img width="828" alt="1" src="https://user-images.githubusercontent.com/46513413/75103259-4f448e80-55c6-11ea-9c7c-eef38d13c491.PNG">
+
+**do-while**
+
+Unlike for and while loops, which test the condition at the beginning of the loop, the do-whileloop checks its condition at the end of the loop; a do-while loop always executes at least once.
+ 
+ 
+    do{
+      statement;
+    }while(condition);
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
