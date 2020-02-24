@@ -1,0 +1,20 @@
+# NetBIOS
+
+Stands for Network Basic Input Output System. Servers and clients use NetBIOS when viewing network shares on the local area network.
+
+NetBIOS can supply some of the following information when querying a computer:
+ •Hostname
+ •NetBIOS name
+ •Domain
+ •Network shares
+ 
+ ![1](https://user-images.githubusercontent.com/46513413/75123434-5e364a00-5675-11ea-90a9-a88ce7e5fe29.png)
+
+UDP is used to perform NetBIOS name resolutionand to carry other one-to-many datagram-based communications. By using NetBIOS datagrams, a host can send small messages to many other hosts.
+
+Heavy traffic, such as a file copy, relies on TCP by using NetBIOS sessions.
+
+When an MS Windows machine browses a network, it uses NetBIOS:
+  •Datagramsto list the shares and the machines
+  •Namesto find workgroups
+  •Sessionsto transmit data to and from a Windows share
