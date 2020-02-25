@@ -75,7 +75,7 @@ The loop continues while the condition evaluates to true. When the condition eva
 
 **do-while**
 
-Unlike for and while loops, which test the condition at the beginning of the loop, the do-whileloop checks its condition at the end of the loop; a do-while loop always executes at least once.
+Unlike for and while loops, which test the condition at the beginning of the loop, the do-whileloop checks its condition at the end of the loop; a do-while loop always executes at least once. Iterates until the condition evaluates to false. 
  
  
     do{
@@ -83,11 +83,51 @@ Unlike for and while loops, which test the condition at the beginning of the loo
     }while(condition);
  
  
+
+C++ has four statements that can change the normal execution flow: return, goto, breakand continue. While return and goto are mostly used anywhere in your program, breakand continue statements are often used in conjunction with any of the loop statements.
+ 
+**return**
+ 
+Used to return from a function. Might have a vlaue associated with it. The expressionmust be used only if the function has a returning value. In this case, the value of the expression will become the return value of the function and can be associated with a variable. Can use as many return statements as we like within a function. However, the function stops executing as soon as it encounters the first return
+ 
+     retrun <expression>;
+     
+**goto**
+
+ It can be used to jump to a specific statement, such as jumping out of a set of deeply nested loops. The gotostatement requires a label. A labelis an identifier followed by a colon.  Note that the label must be in the same block of statements as the gotothat uses it, so we cannot jump between functions.
  
  
- 
- 
- 
- 
- 
+    gotolabel;
+    ...
+    ...
+    label:
+
+**break**
+
+Has two uses: 
+  •Terminates a case in the switch statement 
+  •Forces the termination of a loop, bypassing the normal loop conditional test.
+
+When we use the break statement within a loop, the loop terminates, and the program control resumes at the statement after the loop
+
+![1](https://user-images.githubusercontent.com/46513413/75292384-0cff9500-57f2-11ea-982e-46eb177b9b19.png)
+
+
+**Continue**
+
+The continuestatement works similarly to the break statement. Instead of forcing termination, it forces the code to continue to the next iteration of a loop, skipping any code in between. 
+
+![2](https://user-images.githubusercontent.com/46513413/75292537-64056a00-57f2-11ea-96a0-251c800f5635.png)
+
+
+
+
+
+
+
+
+
+
+
+
  
