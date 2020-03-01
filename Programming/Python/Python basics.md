@@ -1,4 +1,26 @@
-hashbang: #!/bin/python3
+You can use Python in 2 ways:
+
+ Basic interactive: primitive environment. If during the installation you enabled the option ‘Add Python.exe to Path’, you can run it by opening a command shell and running the command ‘Python’ (windows). 
+ 
+ IDLE: IDLE combines an interactive interpreter with code editing and debugging.
+  
+    apt-get install idle
+    
+  Run with:
+  
+    idle-python<version>
+
+
+ ## Interactive shell
+ 
+   Runs your code on the fly, but remember that it does not save your code in a file. It is very useful if you want to experiment and test short programs. The immediate feedback of the interactive prompt is the best way to start learning how Python works and it is the easiest way to learn what a piece of code does without running the whole program.
+   
+## NOTE:
+
+ Python differs from many other programming languages because it uses whitespace and indentation to determine block structures. In other words, Python specifies that several statements are part of a single group by indenting them. Indentation is a good practice that makes code easier to read. While other programming languages (like C/C++/Java...) use curly brackets ‘{}’ to begin and end instruction blocks, Python uses indentation!
+ 
+
+start with a hashbang: #!/bin/python3
 
 ## import os commands
 
@@ -148,12 +170,7 @@ if
      drinks.pop(0)  #remove item 0 from list
      
    
-  ## Tuples 
-  
-   Do not change once you have, unlike lists
-   
-   live inside brackets ()
-   
+
  ## Looping
  
   ### For loops - start to finish of an iterate
