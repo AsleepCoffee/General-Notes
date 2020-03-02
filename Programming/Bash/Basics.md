@@ -1,3 +1,9 @@
+## Environment
+
+Upon the start of the shell, the operating system checks for the existence of several files like ~/.bashrc, ~/.bash_login or~/.bash_profile. These files may contain some instruction to help set up the environment properly. The same thing also happens when closing it, with the ~/.bash_logout file.
+
+
+
 Always start with a hashbang 
 
 #!/bin/bash
