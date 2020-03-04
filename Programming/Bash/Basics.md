@@ -35,3 +35,7 @@ then
 else
 
 fi
+
+# Notes
+
+Data between `` or $() will be evaluated before the whole statement and will become part of this statement
