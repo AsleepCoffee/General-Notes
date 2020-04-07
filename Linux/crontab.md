@@ -8,25 +8,25 @@ We can use the command "cat /etc/crontab" to view what cron jobs are scheduled. 
 Format of a Cronjob
 
 
-# = ID
+    # = ID
 
-m = Minute
+    m = Minute
 
-h = Hour
+    h = Hour
 
-dom = Day of the month
+    dom = Day of the month
 
-mon = Month
+    mon = Month
 
-dow = Day of the week
+    dow = Day of the week
 
-user = What user the command will run as
+    user = What user the command will run as
 
-command = What command should be run
+    command = What command should be run
 
-For Example,
+    For Example,
 
-#  m   h dom mon dow user  command
+    #  m   h dom mon dow user  command
 
-17 *   1  *   *   *  root  cd / && run-parts --report /etc/cron.hourly
+    17 *   1  *   *   *  root  cd / && run-parts --report /etc/cron.hourly
 
