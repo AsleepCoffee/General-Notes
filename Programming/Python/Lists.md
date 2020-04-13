@@ -41,7 +41,7 @@
     
 Adding for loop output into a list
 
-list = []
+      list = []
 
-for X in names:
- list.append(x.text)
+      for X in names:
+       list.append(x.text)
