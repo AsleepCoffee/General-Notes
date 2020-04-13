@@ -39,4 +39,9 @@
     - list.reverse()Reverses the order of the elements in thelist
     
     
-  
+Adding for loop output into a list
+
+list = []
+
+for X in names:
+ list.append(x.text)
