@@ -10,4 +10,6 @@
 **IDP:** Idnetity Provider. An entity that create, maintains, and manages authetications for SPs/RPs. SP/RP does not care how the IDP operates, only that a trusted response is recived. 
 
 
-**Heap** A heap is an area of pre-reserved computer main storage ( memory ) that a program process can use to store data in some variable amount that won't be known until the program is running
+**Heap:** A heap is an area of pre-reserved computer main storage ( memory ) that a program process can use to store data in some variable amount that won't be known until the program is running
+
+**Stack:**  stack is an array or list structure of function calls and parameters used in modern computer programming and CPU architecture. The process of adding data to a stack is referred to as a “push,” while retrieving data from a stack is called a “pop.” This occurs at the top of the stack.
