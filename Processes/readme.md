@@ -34,6 +34,32 @@ When a program runs on a machine, the computer runs the program as a process. Cu
 - The program code and data stores the program executable and initialised variables.
 
 
+**Registers**
+
+Caller vs callee: Caller is a function called by main. Callee is a function called by the caller.
+
+Functions take arguments. The example function takes 2 arguments(a and b). Upto 6 arguments for functions can be stored in the following registers:
+
+    rdi
+    rsi
+    rdx
+    rcx
+    r8
+    r9
+
+Note: rax is a special register that stores the return values of the functions(if any).
+
+If a function has anymore arguments, these arguments would be stored on the functions stack frame. 
+
+We can now see that a caller function may save values in their registers, but what happens if a callee function also wants to save values in the registers? To ensure the values are not overwritten, the callee values first save the values of the registers on their stack frame, use the registers and then load the values back into the registers. The caller function can also save values on the caller function frame to prevent the values from being overwritten. Here are some rules around which registers are caller and callee saved:
+
+    rax is caller saved
+    rdi, rsi, rdx, rcx r8 and r9 are called saved(and they are usually arguments for functions)
+    r10, r11 are caller saved
+    rbx, r12, r13, r14 are callee saved
+    rbp is also callee saved(and can be optionally used as a frame pointer)
+    rsp is callee saved
+
 
 
 
