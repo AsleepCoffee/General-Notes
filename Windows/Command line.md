@@ -1,0 +1,8 @@
+
+
+ http://www.cs.columbia.edu/~sedwards/classes/2015/1102-fall/Command%20Prompt%20Cheatsheet.pdf
+ 
+ https://www.sans.org/security-resources/sec560/windows_command_line_sheet_v1.pdf
+ 
+ 
+    <command> | findstr /B /C:"<string>" /C:"<String>"
