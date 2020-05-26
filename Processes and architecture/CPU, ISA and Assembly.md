@@ -14,15 +14,11 @@ x86 instruction set: Originated from the Intel 8086. Identifies 32 bit processor
 
 x64 (x86_64 or AMD64) identifies 64 bit processors.
 
-**Registers:**
-
-32 or 64 bit refers to the width of the CPU registers. Each CPU has its fixed set of registers that are accessed when required. They are like a temporary variable (small portion of memory in the CPU) used by the CPU to get and store data. 
 
 
-The General Purpose Registers (GPRs): 
 
-for x86 
 
-<img width="1474" alt="Capture" src="https://user-images.githubusercontent.com/46513413/82863348-e552c280-9eef-11ea-8838-bb5a2c5c1887.PNG">
+
+
 
 
