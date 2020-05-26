@@ -22,7 +22,7 @@ The process is divided into four regions:
  The purpose of the ESP (Extended Stack Pointer x86) register is to ID the top of the stack and is modified each time a value is pushed in (PUSH) or popped out (POP). 
 
 
-
+More on the stack here: https://github.com/Kahvi-0/General-Notes/tree/master/Processes%20and%20architecture
 
 
 
