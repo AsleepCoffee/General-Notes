@@ -17,7 +17,9 @@ The process is divided into four regions:
 - Heap: Starts right after the BSS segment. During execution, the program can req more space in memory via *brk* and *sbrk* system calls, which are used by *mllc*, *realloc*, and *free*. with this the size of the data region can be extended.
 
 
-- Stack: 
+- Stack: LIFO block of memory. Located in the higher part of the memory. Think of it as an array used for saving a functions return address, passing args, and storing local variables. 
+
+ The purpose of the ESP (Extended Stack Pointer x86) register is to ID the top of the stack and is modified each time a value is pushed in (PUSH) or popped out (POP). 
 
 
 
