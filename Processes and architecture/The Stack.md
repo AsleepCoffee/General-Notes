@@ -13,11 +13,11 @@ The Stack is LIFO. the most fundamental operations are the PUSH and the POP. The
 
 PUSH: subtracts 4 (in 32-bit) or 8 (in 64-bit) from the ESP and writes the data to the memory addr in the ESP, then updates the ESP to the top of the stack. Since the stack grows backward the PUSH subtracts 4 or 8 in order to point to a lower memory location on the stack. If we do not subtract it, the PUSH operation will overwrite the current location pointed by ESP and we would lose data. 
 
-  ESP = a memory location. We want to PUSH a value into the stack. We will subtract the memory needed from the top of the stack and subtract that value from the ESP so the ESP points to a lower point in memory as the top of the stack. 
+  ESP = a memory location. We want to PUSH a value into the stack. We will subtract the memory needed from the top of the stack and subtract that value from the ESP so the ESP points to a lower point in memory as the top of the stack. ESP will point to a lower memory location to account for the new data we PUSH into the stack.
 
 
-
-
+POP: It retrieves data from the top of the stack. The data contained at the address location in ESP (the top of the stack) is retrieved and stored (usually in another register).
+ After a POP operation, the ESP value is incremended, in x86 by 4 or in x64 by 8. Note that the data is not deleted (or zeroed), it is just able to be overwritten now by another instuction.
 
 
 
