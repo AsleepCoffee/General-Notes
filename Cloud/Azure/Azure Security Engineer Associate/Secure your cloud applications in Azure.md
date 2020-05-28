@@ -111,10 +111,16 @@ Encryption is typically approached in two ways:
 
 - Encrypting VMs: 
 
+Azure Disk Encryption (ADE) is a capability that helps you encrypt your VHD. ADE leverages the industry standard BitLocker feature of Windows and the DM-Crypt feature of Linux to provide volume encryption for the OS and data disks. The solution is integrated with Azure Key Vault to help you control and manage the disk-encryption keys and secrets (and you can use managed identity for Azure services for accessing the key vault).
 
+When you apply the Disk Encryption management solution, you can satisfy the following business needs:
 
+    IaaS VMs are secured at rest by using industry-standard encryption technology to address organizational security and compliance requirements.
+    IaaS VMs boot under customer-controlled keys and policies. You can audit their usage in your key vault.
 
+If you use Azure Security Center, you're alerted if you have VMs that aren't encrypted. The alerts display as High Severity, and the recommendation is to encrypt these VMs. Your organization can apply ADE to their virtual machines to be sure any data stored on VHDs is secured to their organizational and compliance requirements. Because boot disks are also encrypted, they can control and audit usage.
 
+## Encrypting databases
 
 
 
