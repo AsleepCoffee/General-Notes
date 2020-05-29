@@ -122,9 +122,20 @@ If you use Azure Security Center, you're alerted if you have VMs that aren't enc
 
 ## Encrypting databases
 
+TDE (Transparent data encryption) helps protect Azure SQL and Azure Data warehouse against the threat of malicious activity. 
+  
+   - Real time encryption / decryption of DB, associated backups, and transaction log files at rest
+   - No changes to app
+   - TDE is enabled by default
+   - Encryption of DB using symmetric key called the DB Encryption Key. 
+   - Default: Azure provides a unique encryption key per logical SQL Server and handles all the details
+   - Bring-your-own-key is also supported with keys stored in Azure Key Vault.
 
+   - For on premises MSSQL server DB: 
+       - Turn on the SQL Server Always Encrypted feature.
+       
+        
 
-
-
+  
 
 
