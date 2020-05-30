@@ -132,10 +132,37 @@ TDE (Transparent data encryption) helps protect Azure SQL and Azure Data warehou
    - Bring-your-own-key is also supported with keys stored in Azure Key Vault.
 
    - For on premises MSSQL server DB: 
-       - Turn on the SQL Server Always Encrypted feature.
+       - Turn on the SQL Server Always Encrypted feature. (protects column data at rest and transit by having the client app handle encryption/decryption outside the SQL server DB through an installed driver). 
+       - This means the DB never works with unencryptied data.
+       - The Always Encrypted client driver performs the actual encryption and decryption, rewriting the T-SQL queries as necessary to encrypt data passed to the DB and decrypt the results.
+       - Transparent to the app
        
+## Encrypting secrets (keys, passwords, strings, etc)
+
+  - Azure Key Vault: secure secrets store.
+  - Key vaults create multiple secure containers, called vaults that are backed by hardware security modules (HSMs). 
+  - Vaults help reduce the chances of accidental loss of security information by centralizing the storage of application secrets. 
+  - Key Vaults also control and log the access to anything stored in them. 
+  - Azure Key Vault can handle requesting and renewing Transport Layer Security (TLS) certificates, providing the features required for a robust certificate lifecycle management solution. 
+  - Key Vault is designed to support any type of secret. These secrets could be passwords, database credentials, API keys and, certificates.
+  - Azure AD identities can be granted access to use Azure Key Vault secret
+  - Key Vault for the storage of all their sensitive application information, including the TLS certificates they use to secure communication between systems.
         
 
-  
+## Encrypting backups  
+
+- Data is stored encrypted at rest.
+- local backups sing AES256 + key created by passphrase
+- Data is transfered to Azure using HTTPS
+- 
+
+
+
+
+
+
+
+
+
 
 
