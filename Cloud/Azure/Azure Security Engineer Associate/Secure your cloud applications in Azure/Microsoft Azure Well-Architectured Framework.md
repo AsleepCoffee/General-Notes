@@ -154,10 +154,50 @@ TDE (Transparent data encryption) helps protect Azure SQL and Azure Data warehou
 - Data is stored encrypted at rest.
 - local backups sing AES256 + key created by passphrase
 - Data is transfered to Azure using HTTPS
-- 
 
 
+# Network Security
 
+- Securing traffic flow between applications and the internet focuses on limiting exposure outside your network.
+- Securing traffic flow amongst applications focuses on data between applications and their tiers, between different environments, and in other services within your network. 
+- Securing traffic flow between users and the application focuses on securing the network flow for your end users. 
+
+
+## Layered approach to network security
+
+Universal: 
+  - Only needed ports are open
+  - 
+
+- Internet protection
+   - perimeter
+      - App layer 7 load balancer that includes a WAF
+      - For none HTTP protection you can use a network virtual applicance (NVA). These are similar to firewall applicances and are available from many of the most popular network security vendors. NVAs can provide greater customization of security for applications. However are complex. 
+      
+       - Azure DOS protection.
+       - Azure monitor metrics will notify you of attacks
+       
+ - Virtual network security (behind perimeter)
+    - Limit comms between resources that only require it
+    - Network security groups (operate at layer 3 and 4)
+       - provide a list of allowed and denied communication to and from NICs and subnets.
+       - Similar to VLANs (can isolate apps between env, tiers, and services.  
+     - Virtual network service endpoints
+        - To make Azure services only comm from virtual networks
+        - Azure service resources can be secured to your virtual network
+        - fully removes public internet access to resources and only allows traffic from your virtual net
+       
+  - Network integration 
+     - From on-prem to Azure or between services. 
+        - VPN between on-prem and Azure such as ExpressRoute. 
+        - ExpressRoute allows connections to MS cloud services, Azure, Office 365, and Dynamics 365 to send traffic.
+        - This make it so these cloud services can be access, but not just straight from the internet.
+        - Integrate with virtual network peering, which est a direct conn between virtual networks
+          - once integrated, can use network security groups to provide isolation between resources in the same way you would within a virtual network. 
+        - Comm is only allowed between directly connected virtual networks
+
+
+# Application security
 
 
 
