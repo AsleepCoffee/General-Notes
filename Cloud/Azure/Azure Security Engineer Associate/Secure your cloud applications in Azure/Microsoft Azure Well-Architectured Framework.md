@@ -199,10 +199,14 @@ Universal:
 
 # Application security
 
+- Cloud makes physical, building and host level attacks very difficult and have none rewarding returns.
+- Attacks are going to be better against apps
+- Security apps early through Security Dev Lifecycle (SDL)
+-  once app has been deployed, continually evaluate its security posture, determine how to mitigate any issues that are discovered, and feed the knowledge back into the SDL.
+- Security vulnerability scanning software services are available to help automate this process and assess security concerns on a regular cadence, without burdening teams with costly manual processes, such as pentest.
+- Azure Security Center is a free service, now enabled by default for all Azure subscriptions, that is tightly integrated with other Azure application level services, such as Azure Application Gateway and Azure Web Application Firewall. By analyzing logs from these services, Security Center can report on known vulnerabilities in real time, recommend responses to mitigate them, and even be configured to automatically execute playbooks in response to attacks.
 
-
-
-
+Restricting access to a web application by authenticating and authorizing sessions. Azure AD and Azure AD B2C offer an effective way to offload the responsibility of identity and access to a fully managed service. Azure AD conditional access policies, privileged identity management, and Identity Protection controls further enhance a customer's ability to prevent unauthorized access and audit changes.
 
 
 
