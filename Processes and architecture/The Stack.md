@@ -20,9 +20,25 @@ POP: It retrieves data from the top of the stack. The data contained at the addr
  After a POP operation, the ESP value is incremended, in x86 by 4 or in x64 by 8. Note that the data is not deleted (or zeroed), it is just able to be overwritten now by another instuction.
 
 
+## Stack frames 
+
+The Stack consists of logical stack frames (portions/areas of the Stack), that are PUSHed when calling a function and POPped when returning a value.
+
+Functions contain components:
+
+prologue: prepares the stack to be used (like a book mark in a book)
+
+epilogue: When the function has finished, this resets the stack to the prologue settings. 
 
 
+When a subroutine starts (function, procedure) a stack frame is created and assigned to the current ESP location (top of the stack). Allows the subroutine to operatre independently in its own location in the stack
 
+When subroutine ends 2 things happen: 
+
+- program receives the parameters passed from the subroutine
+- the Instruction pointer (EIP) is reset to the location at the time of the initial call
+
+i.e stack frame keeps track of the location where each sub routine should return the control when it terminates.
 
 
 
