@@ -38,9 +38,10 @@ When subroutine ends 2 things happen:
 - program receives the parameters passed from the subroutine
 - the Instruction pointer (EIP) is reset to the location at the time of the initial call
 
-i.e stack frame keeps track of the location where each sub routine should return the control when it terminates.
+i.e stack frame keeps track of the location (i.e its variable and such) where each sub routine should return the control when it terminates.
+Overview example:
 
-
+When a function (example main()) is called it is PUSHed to the top of the stack , if main() calls another function, then that is no PUSHed to the top of the stack. When that function returns, it is POP from the stack and the stack pointer moved to the new top where main() until it is POPed. 
 
 
 
