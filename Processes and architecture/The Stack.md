@@ -103,6 +103,61 @@ Will look something like this
 <img width="768" alt="Capture" src="https://user-images.githubusercontent.com/46513413/83578784-9d422a00-a505-11ea-837b-8c84c9045912.PNG">
 
 
+## Epilogue
+
+Process of the stack frames being destroyed. When a return is executes a return statement, and control goes back to the previous preocedure (and stack frame). Even if the code does nto contain a return, when the the program leaves the subroutine the epilogue will still run.
+
+Operations executed by the epilogue: 
+
+1. Return the control to the calller
+
+2. Replace the stack pointer with the current base pointer. It restores its value to before the prologue; this is done by POPping the base pointer from the stack.
+
+3. Returns to the caller by POPping the instruction pointer from the stack (stored in the stack) and then jumps to it 
+
+Note: POP and PUSH automatically update the ESP. 
+
+Code that represents the epilogue: 
+
+    leave
+    ret 
+
+The instructions can also be written as follows:
+
+    mov esp, ebp
+ ESP and EBP will now point to the same location
+   
+<img width="775" alt="Capture" src="https://user-images.githubusercontent.com/46513413/83585585-3712d280-a518-11ea-83e8-08d872d8d57e.PNG">
+
+   
+    pop ebp
+ POPS the value from the top of the stack into EBP. Since the top of the Stac points to the mem addr location where the old EBP is stored (the EBP of the caller), the caller stack frame is restored. Now the ESP now points to the OLD EIP 
+   
+  
+<img width="802" alt="Capture" src="https://user-images.githubusercontent.com/46513413/83585799-c9b37180-a518-11ea-8f6b-32323d9a9256.PNG">
+
+    ret
+
+RET pops the value contained at the top of the stack to the OLD EIP - the next instruction after the caller, and jumps to that location. This gives control back to the caller. RET affects only the EIP and the ESP registers. 
+
+<img width="803" alt="Capture" src="https://user-images.githubusercontent.com/46513413/83585883-fd8e9700-a518-11ea-89ab-5a59c265bdf9.PNG">
+
+At this point everything is restored correectly and the program can continue with the next instruction. 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
