@@ -30,7 +30,9 @@ Naming conventions:
 Another important register that is important is the EIP(Extended Instruction Pointer x86). It controls the program execution by storing a pointer to the address of the next instruction(machine code) that will be executed (i.e tells the CPU where the next instruction is).  
 
 
+EIP - Points to the next instruction
 
+ESP - points to the top of the stack
 
 
 
