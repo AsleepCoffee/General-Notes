@@ -36,7 +36,6 @@ When a program runs on a machine, the computer runs the program as a process. Cu
 
 **Registers**
 
-Caller vs callee: Caller is a function called by main. Callee is a function called by the caller.
 
 Functions take arguments. The example function takes 2 arguments(a and b). Upto 6 arguments for functions can be stored in the following registers:
 
@@ -61,8 +60,15 @@ We can now see that a caller function may save values in their registers, but wh
     rsp is callee saved
 
 
+**Called functions**
 
+Caller vs callee: Caller is a function called by main. Callee is a function called by the caller.
 
+Subroutines are implemented by using the CALL and RET instruction pair. 
+
+CALL: pushes the current EIP to the stack and jumps to the function addr specified. When the function executes the RET instruction, the last element is POPped from the stack and the CPU jumps to the address. 
+
+More info in the Stack section.
 
 
 
