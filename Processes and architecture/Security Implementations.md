@@ -8,6 +8,8 @@ Note: ASLR is not enabled for all modules meaning that even if a process has ASL
 
 Verify what programs are using ASLR with Process Explorer. 
 
-**DEP (Data Execution Prevention):**
+**EMET(Enhanced Mitigation Experience Toolkit):** ability to deploy security mitigation technologies to all applications. 
 
-**Stack Cookies (Canary):**
+**DEP (Data Execution Prevention):** Defensive hardware and software measure that prevents the execution of code from pages in memory that that are not explicitly marked as executable. tje code injected intomemory cannot be run from that region. This makes buffer overflow exploitations even harder. 
+
+**Stack Cookies (Canary):** Places a value next to the return address on the stack. The function prologue loads a value into this location, while the epiloague makes sure that the value is intact. As a result, when the epilogue runs, it checks the value is still there and that it is correct. If not a buffer overflow proabably taken place, this is BC a buffer overflow usually overwrites data in the stack. 
