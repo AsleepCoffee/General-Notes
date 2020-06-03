@@ -1,6 +1,13 @@
 
 <img width="893" alt="2" src="https://user-images.githubusercontent.com/46513413/82864109-bdfcf500-9ef1-11ea-89ac-1ac5276e1fce.PNG">
 
+Note: that registeres have one value at a time. When represented in a stack,when they are changed or saved to eb set later , they are swapped rather than all saved at once. IE old EBP is saved on the stack and a new value is in the register, one an epilogue is ran, EBP will now contain the value of the OLD EBP that was saved on the stack to be used later in the process. 
+
+As seen below to the right
+
+<img width="526" alt="Capture" src="https://user-images.githubusercontent.com/46513413/83586715-362f7000-a51b-11ea-92d3-adc391126916.PNG">
+
+
 
 The Stack grows downward from high memory address to lower memory addresses. 
  
