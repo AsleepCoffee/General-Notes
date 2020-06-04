@@ -34,6 +34,6 @@ EIP - Points to the next instruction
 
 ESP - points to the top of the stack
 
-
+EBP - On entry to your function, you push it (to save the value for the calling function). Then, you copy esp , the stack pointer, into ebp , so that ebp now points to your function's stack frame.
 
 
