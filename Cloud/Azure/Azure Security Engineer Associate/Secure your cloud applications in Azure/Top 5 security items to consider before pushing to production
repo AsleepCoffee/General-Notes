@@ -46,3 +46,27 @@ Key Vault allows users to store connection strings, secrets, passwords, certific
 
 ## Framework updates
 
+Framework that you choose is an important decision, from a design, and security perspective. Choosing a framework with modern security features and keeping it up-to-date is one of the best ways to ensure your apps are secure.
+
+**Choosing the framework**
+
+How well supported the framework is. The best frameworks have stated security arrangements and are supported by large communities who improve and test the framework. No software is 100% bug-free or totally secure, but when a vulnerability is identified, we want to be certain that it will be closed or have a workaround provided quickly.
+
+Often "well supported" is synonymous with "modern". Older frameworks (potentually EoL and contains vulns) tend to either be replaced or eventually fade in popularity, as they should be replaces, no matter how much experience you have with it. Modern frameworks tend to build on the lessons learned by earlier iterations which makes choosing them for new apps a form of threat surface reduction.
+
+More info: https://docs.microsoft.com/learn/modules/design-for-security-in-azure/
+
+**Keep framework updated**
+
+When we allow our frameworks to become out of date, it creates "technical debt". The further out of date we get, the harder and riskier it will be to bring our code up to the latest version. In addition, much like the initial framework choice, staying on older versions of the framework open you up to more security threats which have been fixed in newer releases of the framework.
+
+**Advantage of built in security**
+
+Always check to see what security features your frameworks offer. Never roll your own security if there's a standard technique or capability built in. In addition, rely on proven algorithms and workflows because these have often been scrutinized by many experts, critiqued and strengthened so you can be assured that they are reliable and secure.
+
+Note: Writing your own security controls, instead of using those provided by your framework, is not only wasting time, it's less secure.
+
+**Azure Security Center**
+
+IF you are using this to host web apps, security center will warn you if any frameworks are out of date in the recommendations tab. 
+
