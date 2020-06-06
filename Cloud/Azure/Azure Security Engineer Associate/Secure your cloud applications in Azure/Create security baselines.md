@@ -77,7 +77,7 @@ Until your business requires this delegation to various users, it is a best prac
 Require administrators to register custom applications.
 
 
-
+## Create an Azure Security Center baseline:
 
 
 
