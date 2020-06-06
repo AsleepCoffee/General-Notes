@@ -68,5 +68,38 @@ Note: Writing your own security controls, instead of using those provided by you
 
 **Azure Security Center**
 
-IF you are using this to host web apps, security center will warn you if any frameworks are out of date in the recommendations tab. 
+If you are using this to host web apps, security center will warn you if any frameworks are out of date in the recommendations tab. 
+
+
+## Safe Dependancies
+
+A large percentage of code present in modern applications are the libraries and dependencies chosen by you: the developer. This is a common practice that saves time and money. However, the downside is that you are now responsible for this code, even though others wrote it, because you used it in your project. If a researcher (or worse, a hacker) discovers a vulnerability in one of these 3rd party libraries, then the same flaw will likely also be present in your app.
+
+Using components with known vulnerabilities is a huge problem in our industry. It is so problematic that is has made the OWASP top ten list of worst web application vulnerabilities, holding at #9 for several years.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
