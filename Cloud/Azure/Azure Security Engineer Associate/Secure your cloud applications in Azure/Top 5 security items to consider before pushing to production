@@ -1,0 +1,45 @@
+## Azure center
+
+Helps you see all the areas you need to protect. 
+
+A monitoring service that provides threat protection across all of your services both in Azure, and on-premises. It can:
+
+-  Provide security recommendations based on your configurations, resources, and networks.
+-  Monitor security settings across on-premises and cloud workloads and automatically apply required security to new services as they come online.
+-  Continuously monitor all your services and perform automatic security assessments to identify potential vulnerabilities before they can be exploited.
+-  Use machine learning to detect and block malware from being installed in your services and virtual machines. You can also allowlist applications to ensure that only the apps you validate are allowed to execute.
+-  Analyze and identify potential inbound attacks and help to investigate threats and any post-breach activity which might have occurred.
+-  Just-In-Time access control for ports, reducing your attack surface by ensuring the network only allows traffic you require.
+
+
+Two tiers: 
+
+- free: provides security policies, assessments, and recommendations. Limited to assessments and recommendations of Azure resources only.
+
+- standard: a robust set of features, including 41threat intelligence.
+
+
+## input and outputs 
+
+Most revalent security weakness of applications is a failure to correctly process data that is received from external sources, particularly user input. Make sure it has been validated before it is used. Failing to analyze user input for possible attacks can result in data loss or exposure, elevation of privilege, or even execution of malicious code on other users' computers.
+
+Always encode user output
+
+Alwasys sanitize and validate input.
+
+## Secrets in key vault
+
+Secrets aren't secrets if they are shared with everyone. Never store confidential data, tokens , passwords, etc inside place such as web pages, web configs or any other places that are not properly protecting data at rest (no matter where the web pages are, its still not properly stored). 
+
+Instead, you should always put these secrets into Azure Key Vault.
+
+**Azure key vault**
+
+Is a secret store. A centralized cloud service for storing application secrets. Key Vault keeps your confidential data safe by keeping application secrets in a single central location and providing secure access, permissions control, and access logging. Secrets are stored in individual vaults, each with their own configuration and security policies to control access. You can then get to your data through a REST API, or through a client SDK available for most languages.
+
+Note: Key Vault is designed to store configuration secrets for server applications. It's not intended for storing data belonging to your app's users, and it shouldn't be used in the client-side part of an app. This is reflected in its performance characteristics, API, and cost model. User data should be stored elsewhere, such as in an Azure SQL database with Transparent Data Encryption, or a storage account with Storage Service Encryption. Secrets used by your application to access those data stores can be kept in Key Vault.
+
+Key management and storing secrets can be complicated and error-prone when performed manually. Rotating certificates manually means potentially going without for a few hours, or days. As mentioned above, saving your connections strings in your configuration file or code repository means someone could steal your credentials.
+
+Key Vault allows users to store connection strings, secrets, passwords, certificates, access policies, file locks (making items in Azure read-only), and automation scripts. It also logs access and activity, allows you to monitor access control (IAM) in your subscription, and it also has diagnostic, metrics, alerts and troubleshooting tools, to ensure you have the access you need.
+
