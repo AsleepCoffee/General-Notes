@@ -77,29 +77,14 @@ A large percentage of code present in modern applications are the libraries and 
 
 Using components with known vulnerabilities is a huge problem in our industry. It is so problematic that is has made the OWASP top ten list of worst web application vulnerabilities, holding at #9 for several years.
 
+**Track known security vulnerabilties**
 
+The problem we have is knowing when an issue is discovered. Keeping our libraries and dependencies updated (#4 in our list!) will of course help, but it's a good idea to keep track of identified vulnerabilities that might impact your application.
 
+Note: When a system has a known vulnerability, it is much more likely also to have exploits available, code that people can use to attack those systems. If an exploit is made public, it is crucial that any affected systems are updated immediately.
 
+How to verify if you have known vulnerabilities in your 3rd party components
 
+You could put a daily task into your phone to go and check this list, there are also many tools exist to allow us to verify if our dependencies are vulnerable. You can run these tools against your codebase, or better yet, add them to your CI/CD pipeline to automatically check for issues as part of the development process.
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+When you use libraries or other 3rd party components as part of your application you are also taking on any risks they may have. The best way to reduce this risk is to ensure that you are only using components that have no known vulnerabilities associated with them.
