@@ -23,8 +23,11 @@ How it occurs:
 
  - The function prologue loads the random value in the canary location, and the epilogue makes sure that the value is not corrupted.
  
+ This introduced a new security measure called SafeSEH.
  
 
 **ROP (Return-Oriented Programming)**
 
 Consists of finding  multiple machine instructions in the program (called gadget), in order to create a chain of instructions that do something. Since the instructions are part of the stack, DEP does not apply to them. Gadgets are small groups of instructions that perform some operations (arithmetical operations on registers, check for conditional jumps, store / load data, etc) and that end with RET. RET is important, it will allow the chain to work and keep jumping to the next address after executing the small set of instructions. Purpose of the entire chain are different. Can use ROP gadgets to call a mem protection function that can be used to mark the stack as executable that will allow us to run the shellcode. Can also use ROP gadgets to execute direct command or copy data into executable regions and then jump to it. 
+
+**[SafeSEH](https://docs.microsoft.com/en-us/cpp/build/reference/safeseh-image-has-safe-exception-handlers?redirectedfrom=MSDN&view=vs-2019)**
