@@ -262,19 +262,96 @@ Monitoring when a policy is created illustrates who has that privilege. This may
 
 By default, no monitoring alerts are created when NSGs are created/updated/deleted. Changing or deleting a security group can allow internal resources to be accessed from improper sources, or for unexpected outbound network traffic.
 
+**Create an activity log alerts for "Creating or updating an SQL Server firewall rule" - Level 1**
+
+Monitoring for Create or update SQL Server Firewall Rule events gives insight into network access changes and may reduce the time it takes to detect suspicious activity.
 
 
+## Create a Networking baseline
 
+Azure networking services maximize flexibility, availability, resiliency, security, and integrity by design. Network connectivity is possible between resources located in Azure, between on-premises and Azure-hosted resources, and to and from the Internet and Azure.
 
+Azure networking security recommendations
 
+Keep in mind that Level 2 options might restrict some features or activity, so carefully consider which security options you decide to enforce.
 
+**Restrict RDP and SSH access from the Internet - Level 1**
 
+It's possible to reach Azure virtual machines by using Remote Desktop Protocol (RDP) and the Secure Shell (SSH) protocol. These protocols enable the management VMs from remote locations and are standard in datacenter computing.
 
+The potential security problem with using these protocols over the Internet is that attackers can use brute force techniques to gain access to Azure virtual machines. 
 
+It's recommended that you disable direct RDP and SSH access to your Azure VMs from the Internet. After direct RDP and SSH access from the Internet is disabled, you have other options that you can use to access these VMs for remote management:
 
+* Point-to-site VPN
+* Site-to-site VPN
+* Azure ExpressRoute
+* Azure Bastion Host
 
+**Restrict SQL Server access from the Internet - Level 1**
 
+Firewall systems help prevent unauthorized access to computer resources. If a firewall is turned on but not correctly configured, attempts to connect to SQL Server might be blocked.
 
+To access an instance of the SQL Server through a firewall, you must configure the firewall on the computer that is running SQL Server. Allowing ingress for the IP range 0.0.0.0/0 (Start IP of 0.0.0.0 and End IP of 0.0.0.0) allows open access to any/all traffic potentially making the SQL Database vulnerable to attacks. Ensure that no SQL Databases allow ingress from the Internet.
+
+**Configure the NSG flow log retention period for more than 90 days - Level 2**
+
+When you create or update a virtual network in your subscription, Network Watcher will be enabled automatically in your Virtual Network's region. There is no impact to your resources or associated charge for automatically enabling Network Watcher.
+
+Network security group (NSG) flow logs are a feature of Network Watcher that allows you to view information about ingress and egress IP traffic through an NSG. Flow logs are written in JSON format, and show outbound and inbound flows on a per rule basis, the network interface (NIC) the flow applies to, 5-tuple information about the flow (Source/destination IP, source/destination port, and protocol), if the traffic was allowed or denied, and in Version 2, throughput information (Bytes and Packets). Logs can be used to check for anomalies and give insight into suspected breaches.
+
+**Enable Network Watcher - Level 1**
+
+Network security group (NSG) flow logs are a feature of Network Watcher that allows you to view information about ingress and egress IP traffic through an NSG.
+
+## Create an Azure VM baseline
+
+Azure Policy is a service in Azure that you use to create, assign, and manage policies. These policies enforce different rules and effects over your resources, so those resources stay compliant with your corporate standards and service level agreements. Azure Policy meets this need by evaluating your resources for non-compliance with assigned policies. For example, you can have a policy to allow only a certain SKU size of virtual machines in your environment. Once this policy is implemented, new and existing resources are evaluated for compliance. With the right type of policy, existing resources can be brought into compliance.
+Azure networking security recommendations
+
+Keep in mind that Level 2 options might restrict some features or activity, so carefully consider which security options you decide to enforce.
+
+**A VM agent must be installed and enabled for data collection for Azure Security Center - Level 1**
+
+Azure Security Center enables you to see which VMs require the VM Agent and will recommend that you enable the VM Agent on those VMs. The VM Agent is installed by default for VMs that are deployed from the Azure Marketplace. Data is needed to assess the VM security state, provide security recommendations, and alert on host-based threats.
+
+**Ensure that OS disk are encrypted - Level 1**
+
+Azure Disk Encryption helps protect and safeguard your data to meet your organizational security and compliance commitments. It uses the BitLocker feature of Windows and the DM-Crypt feature of Linux to provide volume encryption for the OS and data disks of Azure virtual machines (VMs). It is also integrated with Azure Key Vault to help you control and manage the disk encryption keys and secrets, and ensures that all data on the VM disks are encrypted at rest while in Azure storage. Azure Disk Encryption for Windows and Linux VMs is in General Availability in all Azure public regions and Azure Government regions for Standard VMs and VMs with Azure Premium Storage.
+
+If you use Azure Security Center (recommended), you're alerted if you have VMs that aren't encrypted.
+
+**Ensure only approved extensions are installed - Level 1**
+
+Azure virtual machine (VM) extensions are small applications that provide post-deployment configuration and automation tasks on Azure VMs. For example, if a virtual machine requires software installation, anti-virus protection, or to run a script inside of it, a VM extension can be used. Azure VM extensions can be run with the Azure CLI, PowerShell, Azure Resource Manager templates, and the Azure portal. Extensions can be bundled with a new VM deployment, or run against any existing system.
+
+**Ensure that the OS patches for the VMs are applied - Level 1**
+
+Azure Security Center monitors daily Windows and Linux virtual machines (VMs) and computers for missing operating system updates. Security Center retrieves a list of available security and critical updates from Windows Update or Windows Server Update Services (WSUS), depending on which service is configured on a Windows computer. Security Center also checks for the latest updates in Linux systems. If your VM or computer is missing a system update, Security Center will recommend that you apply system updates.
+
+**Ensure that VMs have an installed and running endpoint protection solution - Level 1**
+
+Azure Security Center monitors the status of antimalware protection and reports this under the Endpoint protection issues pane. Security Center highlights issues, such as detected threats and insufficient protection, which can make your virtual machines (VMs) and computers vulnerable to antimalware threats. By using the information under Endpoint protection issues, you can identify a plan to address any issues identified.
+
+## Other baseline security considerations 
+
+There are a few additional security recommendations that you should follow to set general security and operational controls on your Azure subscription.
+
+Keep in mind that Level 2 options might restrict some features or activity, so carefully consider which security options you decide to enforce.
+
+**Set an expiration date on all keys in Azure Key Vault - Level 1**
+
+In addition to the key material, the following attributes may be specified. In a JSON Request, the attributes keyword and braces, { }, are required even if there are no attributes specified. For example, IntDate, optional, default is "forever". The exp (expiration time) attribute identifies the expiration time on or after which the key MUST NOT be used for cryptographic operation,except for certain operation types under particular conditions. The processing of the exp attribute requires that the current date/time MUST be before the expiration date/time listed in the exp attribute. It is thus recommended that you rotate your keys in the key vault and set an explicit expiry time for all keys. This ensures that the keys cannot be used beyond their assigned lifetimes. Key Vault stores and manages secrets as sequences of octets (8-bit bytes),with a maximum size of 25k bytes each. For highly sensitive data, clients should consider additional layers of protection for data. Encrypting data using a separate protection key prior to storage in Key Vault is one example.
+
+**Set an expiration date on all secrets in Azure Key Vault - Level 1**
+
+Securely store and tightly control access to tokens, passwords, certificates, API keys, and other secrets. Ensure that all Secrets in Azure Key Vault have an expiration time set.
+
+**Set resource locks for mission-critical Azure resources - Level 2**
+
+As an administrator, you may need to lock a subscription, resource group, or resource to prevent other users in your organization from accidentally deleting or modifying critical resources. You can set the lock level to CanNotDelete or ReadOnly. In the portal, the locks are called Delete and Read-only respectively. Unlike role-based access control, you use management locks to apply a restriction across all users and roles. Resource Manager locks apply only to operations that happen in the management plane, which consists of operations sent to https://management.azure.com. The locks don't restrict how resources perform their own functions. Resource changes are restricted, but resource operations aren't restricted.
+
+Tip: For example, a ReadOnly lock on a SQL Database prevents you from deleting or modifying the database. It doesn't prevent you from creating, updating, or deleting data in the database. Data transactions are permitted because those operations aren't sent to https://management.azure.com.
 
 
 
