@@ -1,0 +1,1 @@
+   First version of NetBIOS was dev in 1983 as an API (not as a protocol) that served its purpose in deving client/server apps. Originally not intended to be encapped in TCP or UDP , in 1987 NetBIOS over TCP/IP (NetBT or NBT) was released. This was dev to work where the TCP/IP suite is available and is considered a true protocol as described in RFC 1001 and 1002. 
