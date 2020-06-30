@@ -18,3 +18,19 @@
  
 <img width="1309" alt="Capture" src="https://user-images.githubusercontent.com/46513413/86022897-f617bc00-b9f8-11ea-862f-a94a692c6e0e.PNG">
 https://msdn.microsoft.com/en-us/library/cc224454.aspx
+
+ nbtstat -n can show the NetBIOS names on our machine. 
+ 
+ The service that maps NetBIOS names to IP is WINS (Windows Internal Name Service). 
+ 
+ **NetBIOS Datagram Services ** permits the sending of datagram messages to and from a NetBIOS name and broadcast the datagram to all NetBIOS names. The datagram and broadcast methods allow one computer to comm with several other computers at the same time, however are limited in message size. No error detection/ correction using datagram or broadcast methods, however datagram comm allows comm without need for a session to be est. 
+ 
+  **Net BIOS Session Service (NBSS)** Allows two names to est a connection in order to exchange data. For example, when a device creates a file sharing connection the session service is used. Once the session has been est, the two workstation use the SMB. 
+  
+    Steps are used to est the connection: 
+    
+     1. The NetBIOS name is resolved to an IP
+     2. A TCP connection is est between two devices using port 139
+     3. The initiating device sends a NetBIOS session req over the TCP conn.
+       a. This includes the NetBIOS name of the app that wants to est the conn and the NetBIOS name to which to connect
+     4. If the remote device is listening on that name, there will be a positive response and the session will be est. 
