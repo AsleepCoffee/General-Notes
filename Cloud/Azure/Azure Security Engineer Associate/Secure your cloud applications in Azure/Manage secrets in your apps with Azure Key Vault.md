@@ -25,6 +25,10 @@ User data should be stored elsewhere, such as in an Azure SQL database with Tran
 
 In Key Vault, a secret is a name-value pair of strings. Secret names must be 1-127 characters long, contain only alphanumeric characters and dashes, and must be unique within a vault. A secret value can be any UTF-8 string up to 25 KB in size.
 
+Authentication to Key Vault uses Azure Active Directory identities. Access policies are used to provide authorization for actions that apply to every secret in the vault.
+
+Once secrets have been loaded by an app, they are unprotected. Make sure to not log them, store them, or return them in client responses.
+
 **Tip** Secret names don't need to be considered especially secret themselves. You can store them in your app's configuration if your implementation calls for it. The same is true of vault names and URLs.
 
 **Note** Key Vault supports two additional kinds of secrets beyond strings — keys and certificates — and provides useful functionality specific to their use cases. This module does not cover these features and concentrates on secret strings like passwords and connection strings.
@@ -98,18 +102,213 @@ Managed identities are available in all editions of Azure Active Directory, incl
 
 Enabling a managed identity for a web app requires only a single Azure CLI command with no configuration. We'll do it later on when we set up an App Service app and deploy to Azure. 
 
+## Exercise - Access secrets stored in Azure Key Vault
 
 
+**Reading secrets in an ASP.NET Core app**
+
+The Azure Key Vault API is a REST API that handles all management and usage of keys and vaults. Each secret in a vault has a unique URL, and secret values are retrieved with HTTP GET requests.
+
+The official Key Vault client for .NET Core is the *KeyVaultClient* class in the Microsoft.Azure.KeyVault NuGet package. You don't need to use it directly, though — with ASP.NET Core's *AddAzureKeyVault* method, you can load all the secrets from a vault into the Configuration API at startup. This technique enables you to access all of your secrets by name using the same *IConfiguration interface* you use for the rest of your configuration. Apps that use *AddAzureKeyVault* require both Get and List permissions to the vault.
+
+**Tip** Regardless of the framework or language you use to build your app, you should design it to cache secret values locally or load them into memory at startup unless you have a specific reason not to. Reading them directly from the vault every time you need them is unnecessarily slow and expensive.
+
+*AddAzureKeyVault* only requires the vault name as an input, which we'll get from our local app configuration. It also automatically handles managed identity authentication — when used in an app deployed to Azure App Service with managed identities for Azure resources enabled, it will detect the managed identities token service and use it to authenticate. It's a good fit for most scenarios and implements all best practices, and we'll use it in this unit's exercise.
 
 
+**Handling secrets in an app**
+
+Once a secret is loaded into your app, it's up to your app to handle it securely. In the app we build in this module, we write our secret value out to the client response and view it in a web browser to demonstrate that it has been loaded successfully. Returning a secret value to the client is not something you'd normally do! Usually, you'll use secrets to do things like initialize client libraries for databases or remote APIs.
+
+**Important** Always carefully review your code to ensure that your app never writes secrets to any kind of output, including logs, storage, and responses.
 
 
+**Create the app**
+
+In the Azure Cloud Shell terminal, run the following to create a new ASP.NET Core web API application and open it in the editor.
+
+    dotnet new webapi -o KeyVaultDemoApp
+    cd KeyVaultDemoApp
+    code .
+    
+After the editor loads, run the following commands in the shell to add the NuGet package containing **AddAzureKeyVault** and restore all of the app's dependencies.
+
+    dotnet add package Microsoft.Extensions.Configuration.AzureKeyVault -v 2.1.1
+    dotnet restore
+
+Add code to load and use secrets
+
+To demonstrate good usage of Key Vault, we will modify our app to load secrets from the vault at startup. We'll also add a new controller with an endpoint that gets our SecretPassword secret from the vault.
+
+First, the app startup: Open Program.cs, delete the contents and replace them with the following code:
+
+    using Microsoft.AspNetCore;
+    using Microsoft.AspNetCore.Hosting;
+    using Microsoft.Extensions.Configuration;
+
+    namespace KeyVaultDemoApp
+    {
+        public class Program
+        {
+            public static void Main(string[] args)
+            {
+                CreateWebHostBuilder(args).Build().Run();
+            }
+
+            public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
+                WebHost.CreateDefaultBuilder(args)
+                    .ConfigureAppConfiguration((context, config) =>
+                    {
+                        // Build the current set of configuration to load values from
+                        // JSON files and environment variables, including VaultName.
+                        var builtConfig = config.Build();
+
+                        // Use VaultName from the configuration to create the full vault URL.
+                        var vaultUrl = $"https://{builtConfig["VaultName"]}.vault.azure.net/";
+
+                        // Load all secrets from the vault into configuration. This will automatically
+                        // authenticate to the vault using a managed identity. If a managed identity
+                        // is not available, it will check if Visual Studio and/or the Azure CLI are
+                        // installed locally and see if they are configured with credentials that can
+                        // access the vault.
+                        config.AddAzureKeyVault(vaultUrl);
+                    })
+                    .UseStartup<Startup>();
+        }
+    }
+
+The only change from the starter code is the addition of ConfigureAppConfiguration. This is where we load the vault name from configuration and call AddAzureKeyVault with it.
+
+Next, the controller: Create a new file in the Controllers folder called SecretTestController.cs and paste the following code into it.
+
+    using System;
+    using Microsoft.AspNetCore.Http;
+    using Microsoft.AspNetCore.Mvc;
+    using Microsoft.Extensions.Configuration;
+
+    namespace KeyVaultDemoApp.Controllers
+    {
+        [Route("api/[controller]")]
+        public class SecretTestController : ControllerBase
+        {
+            private readonly IConfiguration _configuration;
+
+            public SecretTestController(IConfiguration configuration)
+            {
+                _configuration = configuration;
+            }
+
+            [HttpGet]
+            public IActionResult Get()
+            {
+                // Get the secret value from configuration. This can be done anywhere
+                // we have access to IConfiguration. This does not call the Key Vault
+                // API, because the secrets were loaded at startup.
+                var secretName = "SecretPassword";
+                var secretValue = _configuration[secretName];
+
+                if (secretValue == null)
+                {
+                    return StatusCode(
+                        StatusCodes.Status500InternalServerError,
+                        $"Error: No secret named {secretName} was found...");
+                }
+                else {
+                    return Content($"Secret value: {secretValue}" +
+                        Environment.NewLine + Environment.NewLine +
+                        "This is for testing only! Never output a secret " +
+                        "to a response or anywhere else in a real app!");
+                }
+            }
+        }
+    }
+
+Run dotnet build in the shell to make sure everything compiles. The app is ready to run. Not to get into Azure. 
 
 
+## Exercise - Configure, deploy, and run in Azure
+
+We need to create an Azure App Service app, set it up with a managed identity and our vault configuration, and deploy our code.
+
+**Create the App Service plan and app**
+
+Creating an App Service app is a two-step process: First create the plan, then the app.
+
+The plan name only needs to be unique within your subscription, so you can use the same name we've used: keyvault-exercise-plan. The app name needs to be globally unique, though, so you'll need to pick your own.
+
+In Azure Cloud Shell, run the following to create an App Service plan:
+
+    az appservice plan create \
+        --name keyvault-exercise-plan \
+        --sku FREE \
+        --location centralus \
+        --resource-group learn-561b1876-d72b-4630-b4e9-a95fdee45869
+
+Next, run the following command to create the Web App that uses the App Service plan you just created:
+
+    az webapp create \
+        --plan keyvault-exercise-plan \
+        --resource-group learn-561b1876-d72b-4630-b4e9-a95fdee45869 \
+        --name <your-unique-app-name>
+
+**Add configuration to the app**
+
+For deploying to Azure, we'll follow the App Service best practice of putting the VaultName configuration in an application setting instead of a configuration file. Run this command to create the application setting:
+
+    az webapp config appsettings set \
+        --resource-group learn-561b1876-d72b-4630-b4e9-a95fdee45869 \
+        --name <your-unique-app-name> \
+        --settings 'VaultName=<your-unique-vault-name>'
+
+**Enable managed identity**
+
+Enabling managed identity on an app is a one-liner — run this to enable it on your app:
+
+    az webapp identity assign \
+        --resource-group learn-561b1876-d72b-4630-b4e9-a95fdee45869 \
+        --name <your-unique-app-name>
+
+From the JSON output that results, copy the principalId value. PrincipalId is the unique ID of the app's new identity in Azure Active Directory, and we're going to use it in the next step.
+
+**Grant access to the vault**
+
+The last step before deploying is to assign Key Vault permissions to your app's managed identity. Use the principalId value you copied from the previous step as the value for object-id in the command below. Running this command will grant Get and List access:
+
+    az keyvault set-policy \
+        --secret-permissions get list \
+        --name <your-unique-vault-name> \
+        --object-id <your-managed-identity-principleid>
 
 
+**Deploy the app and try it out**
 
+All your configuration is set and you're ready to deploy! The below commands will publish the site to the pub folder, zip it up into site.zip, and deploy the zip to App Service.
+You'll need to *cd* back to the KeyVaultDemoApp directory if you're not still there.
 
+    dotnet publish -o pub
+    zip -j site.zip pub/*
+
+    az webapp deployment source config-zip \
+        --src site.zip \
+        --resource-group learn-561b1876-d72b-4630-b4e9-a95fdee45869 \
+        --name <your-unique-app-name>
+        
+The deployment may take a minute or two to complete. Once you get a result that indicates the site has deployed, open https://<your-unique-app-name>.azurewebsites.net/api/SecretTest in a browser. The app will take a moment to start up for the first time on the server, but once it does, you should see the secret value, reindeer_flotilla.
+    
+When you're working in your own subscription, it's a good idea at the end of a project to identify whether you still need the resources you created. Resources left running can cost you money. You can delete resources individually or delete the resource group to delete the entire set of resources.
+
+To cleanup your Cloud Shell storage, delete the KeyVaultDemoApp directory.
+
+Next steps
+
+If this was a real app, what would come next?
+
+   - Put all your app secrets in your vaults! There's no longer any reason to have them in configuration files.
+   - Continue to develop the application. Your production environment is all set up, so for future deployments to it you don't need to repeat all the setup.
+   - To support development, create a development-environment vault that contains secrets with the same names but different values. Grant permissions to the development team and configure the vault name in the app's development-environment configuration file. Configuration depends on your implementation: for ASP.NET Core, AddAzureKeyVault will automatically detect local installations of Visual Studio and the Azure CLI and use Azure credentials configured in those applications to sign in and access the vault. For Node.js, you can create a development-environment service principal with permissions to the vault and have the app authenticate using loginWithServicePrincipalSecret.
+   - Create additional environments for purposes like user acceptance testing.
+   - Separate vaults across different subscriptions and/or resource groups to isolate them.
+   - Grant access to other environment vaults to the appropriate people.
 
 
 
