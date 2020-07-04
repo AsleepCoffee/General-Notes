@@ -6,6 +6,7 @@ This module focuses on just two of the possible EF Core data stores supported by
 
 Run the following command in the command shell. The command reflects your data store choice in the toggle above. Be patient, as setup can take a few minutes to complete. Continue reading while the script runs.
 
+    . <(wget -q -O - https://aka.ms/secure-aspnet-core-identity-setup) "sql"
 
 
 
