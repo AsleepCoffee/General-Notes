@@ -93,3 +93,173 @@ With physical security, the intent is to provide physical safeguards against acc
 
 Azure helps alleviate your security concerns. But security is still a shared responsibility. How much of that responsibility falls on us depends on which model we use with Azure. We use the defense in depth rings as a guideline for considering what protections are adequate for our data and environments.
 
+## Get tips from Azure Security Center
+
+Security Center is a monitoring service that provides threat protection across all of your services both in Azure, and on-premises. Security Center can:
+
+   - Provide security recommendations based on your configurations, resources, and networks.
+   - Monitor security settings across on-premises and cloud workloads, and automatically apply required security to new services as they come online.
+   - Continuously monitor all your services, and perform automatic security assessments to identify potential vulnerabilities before they can be exploited.
+   - Use machine learning to detect and block malware from being installed on your virtual machines and services. You can also define a list of allowed applications to ensure that only the apps you validate are allowed to execute.
+   - Analyze and identify potential inbound attacks, and help to investigate threats and any post-breach activity that might have occurred.
+   - Provide just-in-time access control for ports, reducing your attack surface by ensuring the network only allows traffic that you require.
+
+Azure Security Center is part of the Center for Internet Security (CIS) recommendations.
+
+**Available tiers**
+
+Azure Security Center is available in two tiers:
+
+   1. Free. Available as part of your Azure subscription, this tier is limited to assessments and recommendations of Azure resources only.
+   2. Standard. This tier provides a full suite of security-related services including continuous monitoring, threat detection, just-in-time access control for ports, and more.
+
+To access the full suite of Azure Security Center services, you will need to upgrade to a Standard tier subscription. You can access the 30-day free trial from within the Azure Security Center dashboard in the Azure portal. After the 30-day trial period is over, Azure Security Center is $15 per node per month.
+
+**Usage scenarios**
+
+You can integrate Security Center into your workflows and use it in many ways. Here are two examples.
+
+   1. Use Security Center for incident response.
+
+    Many organizations learn how to respond to security incidents only after suffering an attack. To reduce costs and damage, it's important to have an incident response plan in place before an attack occurs. You can use Azure Security Center in different stages of an incident response.
+
+    You can use Security Center during the detect, assess, and diagnose stages. Here are examples of how Security Center can be useful during the three initial incident response stages:
+      - Detect. Review the first indication of an event investigation. For example, you can use the Security Center dashboard to review the initial verification that a high-priority security alert was raised.
+      -  Assess. Perform the initial assessment to obtain more information about the suspicious activity. For example, obtain more information about the security alert.
+      -  Diagnose. Conduct a technical investigation and identify containment, mitigation, and workaround strategies. For example, follow the remediation steps described by Security Center in that particular security alert.
+
+   2. Use Security Center recommendations to enhance security.
+
+    You can reduce the chances of a significant security event by configuring a security policy, and then implementing the recommendations provided by Azure Security Center.
+        A security policy defines the set of controls that are recommended for resources within that specified subscription or resource group. In Security Center, you define policies according to your company's security requirements.
+        Security Center analyzes the security state of your Azure resources. When Security Center identifies potential security vulnerabilities, it creates recommendations based on the controls set in the security policy. The recommendations guide you through the process of configuring the needed security controls. For example, if you have workloads that do not require the Azure SQL Database Transparent Data Encryption (TDE) policy, turn off the policy at the subscription level and enable it only in the resources groups where SQL TDE is required.
+
+Important: To upgrade a subscription to the Standard tier, you must be assigned the role of Subscription Owner, Subscription Contributor, or Security Admin.
+
+
+## Identity and access
+
+Network perimeters, firewalls, and physical access controls used to be the primary protection for corporate data. But network perimeters have become increasingly porous with the explosion of bring your own device (BYOD), mobile apps, and cloud applications.
+
+Identity has become the new primary security boundary. Therefore, proper authentication and assignment of privileges is critical to maintaining control of your data.
+
+Your company, Contoso Shipping, is focused on addressing these concerns right away. Your team's new hybrid cloud solution needs to account for mobile apps that have access to secret data when an authorized user is signed in — in addition to having shipping vehicles constantly send a stream of telemetry data that is critical to optimizing the company's business.
+
+**Authentication and authorization**
+
+Two fundamental concepts that need to be understood when talking about identity and access control are authentication and authorization. They underpin everything else that happens and occur sequentially in any identity and access process:
+
+    Authentication is the process of establishing the identity of a person or service looking to access a resource. It involves the act of challenging a party for legitimate credentials, and provides the basis for creating a security principal for identity and access control use. It establishes if they are who they say they are.
+
+    Authorization is the process of establishing what level of access an authenticated person or service has. It specifies what data they're allowed to access and what they can do with it.
+
+Note: Authentication is sometimes shortened to AuthN, and authorization is sometimes shortened to AuthZ.
+
+Azure provides services to manage both authentication and authorization through Azure Active Directory (Azure AD).
+
+**What is Azure Active Directory?**
+
+Azure AD is a cloud-based identity service. It has built in support for synchronizing with your existing on-premises Active Directory or can be used stand-alone. This means that all your applications, whether on-premises, in the cloud (including Office 365), or even mobile can share the same credentials. Administrators and developers can control access to internal and external data and applications using centralized rules and policies configured in Azure AD.
+
+Azure AD provides services such as:
+
+   - Authentication. This includes verifying identity to access applications and resources, and providing functionality such as self-service password reset, multi-factor authentication (MFA), a custom banned password list, and smart lockout services.
+   - Single-Sign-On (SSO). SSO enables users to remember only one ID and one password to access multiple applications. A single identity is tied to a user, simplifying the security model. As users change roles or leave an organization, access modifications are tied to that identity, greatly reducing the effort needed to change or disable accounts.
+   - Application management. You can manage your cloud and on-premises apps using Azure AD Application Proxy, SSO, the My apps portal (also referred to as Access panel), and SaaS apps.
+   - Business to business (B2B) identity services. Manage your guest users and external partners while maintaining control over your own corporate data
+   - Business-to-Customer (B2C) identity services. Customize and control how users sign up, sign in, and manage their profiles when using your apps with services.
+   - Device Management. Manage how your cloud or on-premises devices access your corporate data.
+
+
+**Single sign-on**
+
+The more identities a user has to manage, the greater the risk of a credential-related security incident. More identities mean more passwords to remember and change. Password policies can vary between applications and, as complexity requirements increase, it becomes increasingly difficult for users to remember them.
+
+With SSO, users need to remember only one ID and one password. Access across applications is granted to a single identity tied to a user, simplifying the security model. As users change roles or leave an organization, access modifications are tied to the single identity, greatly reducing the effort needed to change or disable accounts. Using SSO for accounts will make it easier for users to manage their identities and will increase the security capabilities in your environment.
+
+SSO with Azure Active Directory
+
+By leveraging Azure AD for SSO you'll also have the ability to combine multiple data sources into an intelligent security graph. This security graph enables the ability to provide threat analysis and real-time identity protection to all accounts in Azure AD, including accounts that are synchronized from your on-premises AD. By using a centralized identity provider, you'll have centralized the security controls, reporting, alerting, and administration of your identity infrastructure.
+
+As Contoso Shipping integrates its existing Active Directory instance with Azure AD, you will make controlling access consistent across the organization. Doing so will also greatly simplify the ability to sign into email and Office 365 documents without having to reauthenticate.
+
+
+**Multi-factor authentication**
+
+Multi-factor authentication (MFA) provides additional security for your identities by requiring two or more elements for full authentication. These elements fall into three categories:
+
+    Something you know would be a password or the answer to a security question.
+    Something you possess could be a mobile app that receives a notification or a token-generating device.
+    Something you are is typically some sort of biometric property, such as a fingerprint or face scan used on many mobile devices.
+
+Using MFA increases security of your identity by limiting the impact of credential exposure. An attacker who has a user's password would also need to have possession of their phone or their security token generator in order to fully authenticate. Authentication with only a single factor verified is insufficient, and the attacker would be unable to use only those credentials to authenticate. The benefits this brings to security are huge, and we can't emphasize enough the importance of enabling MFA wherever possible.
+
+Azure AD has MFA capabilities built in and will integrate with other third-party MFA providers. MFA should be used for users in the Global Administrator role in Azure AD, because these are highly sensitive accounts. All other accounts can also have MFA enabled.
+
+For Contoso Shipping, you decide to enable MFA any time a user is signing in from a non-domain-connected computer — which includes the mobile apps your drivers use.
+
+**Providing identities to services**
+
+It's usually valuable for services to have identities. Often, and against best practices, credential information is embedded in configuration files. With no security around these configuration files, anyone with access to the systems or repositories can access these credentials and risk exposure.
+
+Azure AD addresses this problem through two methods: service principals and managed identities for Azure services.
+
+**Service principals**
+
+To understand service principals, it's useful to first understand the words identity and principal, because of how they are used in the identity management world.
+
+An identity is just a thing that can be authenticated. Obviously, this includes users with a user name and password, but it can also include applications or other servers, which might authenticate with secret keys or certificates.
+
+A principal is an identity acting with certain roles or claims. Usually, it is not useful to consider identity and principal separately, but think of using 'sudo' on a Bash prompt in Linux or on Windows using "run as Administrator." In both those cases, you are still logged in as the same identity as before, but you've changed the role under which you are executing. Groups are often also considered principals because they can have rights assigned.
+
+A service principal is an identity that is used by a service or application. And like other identities, it can be assigned roles.
+
+**Managed identities for Azure services**
+
+The creation of service principals can be a tedious process, and there are a lot of touch points that can make maintaining them difficult. Managed identities for Azure services are much easier and will do most of the work for you.
+
+A managed identity can be instantly created for any Azure service that supports it—and the list is constantly growing. When you create a managed identity for a service, you are creating an account on your organization's Active Directory (a specific organization's Active Directory instance is known as an "Active Directory Tenant"). The Azure infrastructure will automatically take care of authenticating the service and managing the account. You can then use that account like any other Azure AD account, including allowing the authenticated service secure access of other Azure resources.
+
+**Role-based access control**
+
+Roles are sets of permissions, like "Read-only" or "Contributor", that users can be granted to access an Azure service instance.
+
+Identities are mapped to roles directly or through group membership. Separating security principals, access permissions, and resources provides simple access management and fine-grained control. Administrators are able to ensure the minimum necessary permissions are granted.
+
+Roles can be granted at the individual service instance level, but they also flow down the Azure Resource Manager hierarchy (i.e Mgmt group -> subscription -> resource group -> resource).
+
+**Privileged Identity Management**
+
+In addition to managing Azure resource access with role-based access control (RBAC), should be including the ongoing auditing of role members as their organization changes and evolves. Azure AD Privileged Identity Management (PIM) is an additional, paid-for offering that provides oversight of role assignments, self-service, and just-in-time role activation and Azure AD and Azure resource access reviews.
+
+**Summary**
+
+Identity allows us to maintain a security perimeter, even outside our physical control. With single sign-on and appropriate role-based access configuration, we can always be sure who has the ability to see and manipulate our data and infrastructure.
+
+## Encryption
+
+For most organizations, data is the most valuable and irreplaceable asset. Encryption serves as the last and strongest line of defense in a layered security strategy.
+
+Contoso Shipping knows that encryption is the only protection its data has once it leaves the data center and is stored on mobile devices that could potentially be hacked or stolen.
+
+**What is encryption?**
+
+Encryption is the process of making data unreadable and unusable to unauthorized viewers. To use or read the encrypted data, it must be decrypted, which requires the use of a secret key. There are two top-level types of encryption: symmetric and asymmetric.
+
+Symmetric encryption uses the same key to encrypt and decrypt the data. Consider a desktop password manager application. You enter your passwords and they are encrypted with your own personal key (your key is often derived from your master password). When the data needs to be retrieved, the same key is used, and the data is decrypted.
+
+Asymmetric encryption uses a public key and private key pair. Either key can encrypt but a single key can't decrypt its own encrypted data. To decrypt, you need the paired key. Asymmetric encryption is used for things like Transport Layer Security (TLS) (used in HTTPS) and data signing.
+
+Both symmetric and asymmetric encryption play a role in properly securing your data. Encryption is typically approached in two ways:
+
+- Encryption at rest
+- Encryption in transit
+
+
+
+
+
+
+
+
+
