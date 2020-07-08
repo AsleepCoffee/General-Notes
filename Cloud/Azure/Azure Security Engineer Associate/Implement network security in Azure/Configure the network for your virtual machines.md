@@ -254,13 +254,366 @@ dataProcStage2 responds with four replies, demonstrating connectivity between th
 You successfully created a virtual network, created two VMs that are attached to that virtual network, connected to one of the VMs and shown network connectivity to the other VM within the same virtual network. You can use Azure Virtual Network to connect resources within the Azure network. However, those resources need to be within the same resource group and subscription. Next, we will look at VPN gateways, which enable you to connect virtual network in different resource groups, subscriptions, and even geographical regions.
 
 
+## Explore Azure VPN Gateway
+
+To integrate your on-premises environment with Azure, you need the ability to create an encrypted connection. You can connect over the Internet or over a dedicated link. Here, we'll look at Azure VPN Gateway, which provides an endpoint for incoming connections from on-premises environments.
+
+You have set up an Azure virtual network and need to ensure that any data transfers from Azure to your site and between Azure virtual networks are encrypted. You also need to know how to connect virtual networks between regions and subscriptions.
+
+**What is a VPN gateway?**
+
+An Azure virtual network gateway provides an endpoint for incoming connections from on-premises locations to Azure over the Internet. A VPN gateway is a specific type of virtual network gateway that can be an endpoint for encrypted connections. It can also send encrypted traffic between Azure virtual networks over Microsoft's dedicated network that links Azure datacenters in different regions. This configuration allows you to link virtual machines and services in different regions securely.
+
+Each virtual network can have only one VPN gateway. All connections to that VPN gateway share the available network bandwidth.
+
+Within each virtual network gateway there are two or more virtual machines (VMs). These VMs have been deployed to a special subnet that you specify, called the gateway subnet. They contain routing tables for connections to other networks, along with specific gateway services. These VMs and the gateway subnet are similar to a hardened network device. You don't need to configure these VMs directly and should not deploy any additional resources into the gateway subnet.
+
+Creating a virtual network gateway can take some time to complete, so it's vital that you plan appropriately. When you create a virtual network gateway, the provisioning process generates the gateway VMs and deploys them to the gateway subnet. These VMs will have the settings that you configure on the gateway.
+
+A key setting is the gateway type. The gateway type determines the way the gateway functions. For a VPN gateway, the gateway type is "vpn". Options for VPN gateways include:
+
+    Network-to-network connections over IPsec/IKE VPN tunneling, linking VPN gateways to other VPN gateways.
+
+    Cross-premises IPsec/IKE VPN tunneling, for connecting on-premises networks to Azure through dedicated VPN devices to create site-to-site connections.
+
+    Point-to-site connections over IKEv2 or SSTP, to link client computers to resources in Azure.
+
+Now, let's look at the factors you need to consider for planning your VPN gateway.
+
+**Plan a VPN gateway**
+
+When you're planning a VPN gateway, there are three architectures to consider:
+
+    Point to site over the Internet
+    Site to site over the Internet
+    Site to site over a dedicated network, such as Azure ExpressRoute
+
+**Planning factors**
+
+Factors that you need to cover during your planning process include:
+
+    Throughput - Mbps or Gbps
+    Backbone - Internet or private?
+    Availability of a public (static) IP address
+    VPN device compatibility
+    Multiple client connections or a site-to-site link?
+    VPN gateway type
+    Azure VPN Gateway SKU
+
+The following table summarizes some of these planning issues. The remainder are discussed later.
+
+![Capture](https://user-images.githubusercontent.com/46513413/86923917-bb024080-c0fc-11ea-9e11-4a36168a1eb1.PNG)
+
+**Gateway SKUs**
+
+It's important that you choose the right SKU. If you have set up your VPN gateway with the wrong one, you'll have to take it down and rebuild the gateway, which can be time consuming. For the latest information about gateway SKUs, including throughput, see What is VPN Gateway? - Gateway SKUs.
+Workflow
+
+When designing a cloud connectivity strategy using virtual private networking on Azure, you should apply the following workflow:
+
+    Design your connectivity topology, listing the address spaces for all connecting networks.
+
+    Create an Azure virtual network.
+
+    Create a VPN gateway for the virtual network.
+
+    Create and configure connections to on-premises networks or other virtual networks, as required.
+
+    If required, create and configure a point-to-site connection for your Azure VPN gateway.
+
+**Design considerations**
+
+When you design your VPN gateways to connect virtual networks, you must consider the following factors:
+
+    Subnets cannot overlap
+
+    It is vital that a subnet in one location does not contain the same address space as in another location.
+
+    IP addresses must be unique
+
+    You cannot have two hosts with the same IP address in different locations, as it will be impossible to route traffic between those two hosts and the network-to-network connection will fail.
+
+    VPN gateways need a gateway subnet called GatewaySubnet
+
+    It must have this name for the gateway to work, and it should not contain any other resources.
+
+Create an Azure virtual network
+
+Before you create a VPN gateway, you need to create the Azure virtual network.
+Create a VPN gateway
+
+The type of VPN gateway you create will depend on your architecture. Options are:
+
+    RouteBased
+
+    Route-based VPN devices use any-to-any (wildcard) traffic selectors, and let routing/forwarding tables direct traffic to different IPsec tunnels. Route-based connections are typically built on router platforms where each IPsec tunnel is modeled as a network interface or VTI (virtual tunnel interface).
+
+    PolicyBased
+
+    Policy-based VPN devices use the combinations of prefixes from both networks to define how traffic is encrypted/decrypted through IPsec tunnels. A policy-based connection is typically built on firewall devices that perform packet filtering. IPsec tunnel encryption and decryption are added to the packet filtering and processing engine.
+
+**Set up a VPN gateway**
+
+The steps you need to take will depend on the type of VPN gateway that you are installing. For example, to create a point-to-site VPN gateway by using the Azure portal, you would carry out the following steps:
+
+    Create a virtual network
+
+    Add a gateway subnet
+
+    Specify a DNS server (optional)
+
+    Create a virtual network gateway
+
+    Generate certificates
+
+    Add the client address pool
+
+    Configure the tunnel type
+
+    Configure the authentication type
+
+    Upload the root certificate public certificate data
+
+    Install an exported client certificate
+
+    Generate and install the VPN client configuration package
+
+    Connect to Azure
+
+As there are several configuration paths with Azure VPN gateways, each with multiple options, it is not possible to cover every setup in this course. For more information, see the Additional Resources section.
+Configure the gateway
+
+Once your gateway is created, you'll need to configure it. There are several configuration settings you will need to provide, such as the name, location, DNS server, etc. We will go into these in more detail in the exercise.
+
+Azure VPN gateways are a component in Azure virtual networks that enable point-to-site, site-to-site, or network-to-network connections. Azure VPN gateways enable individual client computers to connect to resources in Azure, extend on-premises networks into Azure, or facilitate connections between virtual networks in different regions and subscriptions.
 
 
+## Create an Azure VPN gateway
 
+You want to ensure that you can connect clients or sites within your environment into Azure using encrypted tunnels across the public Internet. In this unit, you'll create a point-to-site VPN gateway, and then connect to that gateway from your client computer. You'll use native Azure certificate authentication connections for security.
 
+You will carry out the following process:
 
+ Create a RouteBased VPN gateway.
 
+ Upload the public key for a root certificate for authentication purposes.
 
+ Generate a client certificate from the root certificate, and then install the client certificate on each client computer that will connect to the virtual network for authentication purposes.
+
+ Create VPN client configuration files, which contain the necessary information for the client to connect to the virtual network.
+
+**Setup**
+
+To complete this module, use Azure PowerShell from your local Windows 10 computer.
+
+Open a new PowerShell session on your local Windows 10 computer where you have the Azure PowerShell module installed.
+Sign in to Azure by using the PowerShell cmdlet Connect-AzAccount.
+Set up variables you'll use to create a virtual network. Copy and paste in the following variables into PowerShell.
+
+    PowerShell
+
+    $VNetName  = "VNetData"
+    $FESubName = "FrontEnd"
+    $BESubName = "Backend"
+    $GWSubName = "GatewaySubnet"
+    $VNetPrefix1 = "192.168.0.0/16"
+    $VNetPrefix2 = "10.254.0.0/16"
+    $FESubPrefix = "192.168.1.0/24"
+    $BESubPrefix = "10.254.1.0/24"
+    $GWSubPrefix = "192.168.200.0/26"
+    $VPNClientAddressPool = "172.16.201.0/24"
+    $ResourceGroup = "VpnGatewayDemo"
+    $Location = "East US"
+    $GWName = "VNetDataGW"
+    $GWIPName = "VNetDataGWPIP"
+    $GWIPconfName = "gwipconf"
+
+Configure a virtual network
+
+Run the following command to create a resource group.
+   
+    PowerShell
+
+    New-AzResourceGroup -Name $ResourceGroup -Location $Location
+
+Run the following command to create subnet configurations for the virtual network. These have the name FrontEnd, BackEnd, and GatewaySubnet. All of these subnets exist within the virtual network prefix.
+
+    PowerShell
+
+    $fesub = New-AzVirtualNetworkSubnetConfig -Name $FESubName -AddressPrefix $FESubPrefix
+    $besub = New-AzVirtualNetworkSubnetConfig -Name $BESubName -AddressPrefix $BESubPrefix
+    $gwsub = New-AzVirtualNetworkSubnetConfig -Name $GWSubName -AddressPrefix $GWSubPrefix
+
+Next, run the following command to create the virtual network using the subnet values and a static DNS server.
+
+    PowerShell
+
+    New-AzVirtualNetwork -Name $VNetName -ResourceGroupName $ResourceGroup -Location $Location -AddressPrefix $VNetPrefix1,$VNetPrefix2 -Subnet $fesub, $besub, $gwsub -DnsServer 10.2.1.3
+
+Now specify the variables for this network that you have just created.
+
+    PowerShell
+
+    $vnet = Get-AzVirtualNetwork -Name $VNetName -ResourceGroupName $ResourceGroup
+    $subnet = Get-AzVirtualNetworkSubnetConfig -Name "GatewaySubnet" -VirtualNetwork $vnet
+
+Run the following command to request a dynamically assigned public IP address.
+
+    PowerShell
+
+    $pip = New-AzPublicIpAddress -Name $GWIPName -ResourceGroupName $ResourceGroup -Location $Location -AllocationMethod Dynamic
+    $ipconf = New-AzVirtualNetworkGatewayIpConfig -Name $GWIPconfName -Subnet $subnet -PublicIpAddress $pip
+
+**Create the VPN gateway
+
+When creating this VPN gateway:
+
+    GatewayType must be Vpn
+    VpnType must be RouteBased
+
+Note that this part of the exercise can take up to 45 minutes to complete.
+
+    To create the VPN gateway, run the following command and press Enter.
+    PowerShell
+
+    New-AzVirtualNetworkGateway -Name $GWName -ResourceGroupName $ResourceGroup `
+    -Location $Location -IpConfigurations $ipconf -GatewayType Vpn `
+    -VpnType RouteBased -EnableBgp $false -GatewaySku VpnGw1 -VpnClientProtocol "IKEv2"
+
+    Wait for the command output to appear.
+
+Add the VPN client address pool
+
+    Run the following command to add the VPN client address pool.
+    PowerShell
+
+    $Gateway = Get-AzVirtualNetworkGateway -ResourceGroupName $ResourceGroup -Name $GWName
+    Set-AzVirtualNetworkGateway -VirtualNetworkGateway $Gateway -VpnClientAddressPool $VPNClientAddressPool
+
+    Wait for the command output to appear.
+
+**Generate a client certificate**
+
+With the network infrastructure created on Azure, we need to create a self-signed client certificate on our local machine. This can be done similarly on most operating systems, but we will cover how to generate your client certificate on Windows 10 using PowerShell with the Azure PowerShell module and the Windows Certificate Manager utility.
+
+Our first step is to create the self-signed root certificate. Run the following command.
+
+    PowerShell
+
+    $cert = New-SelfSignedCertificate -Type Custom -KeySpec Signature `
+    -Subject "CN=P2SRootCert" -KeyExportPolicy Exportable `
+    -HashAlgorithm sha256 -KeyLength 2048 `
+    -CertStoreLocation "Cert:\CurrentUser\My" -KeyUsageProperty Sign -KeyUsage CertSign
+
+Next, generate a client certificate signed by your new root certificate.
+
+      PowerShell
+
+        New-SelfSignedCertificate -Type Custom -DnsName P2SChildCert -KeySpec Signature `
+        -Subject "CN=P2SChildCert" -KeyExportPolicy Exportable `
+        -HashAlgorithm sha256 -KeyLength 2048 `
+        -CertStoreLocation "Cert:\CurrentUser\My" `
+        -Signer $cert -TextExtension @("2.5.29.37={text}1.3.6.1.5.5.7.3.2")
+
+Export certificate public key
+
+With our certificates generated, we need to export our root certificate's public key.
+
+    Run certmgr from PowerShell to open the Certificate Manager.
+
+    Go to Personal > Certificates.
+
+    Right-click the P2SRootCert certificate in the list and select All tasks > Export....
+
+    In the Certificate Export Wizard, click Next.
+
+    Ensure that No, do not export the private key is selected, and then click Next.
+
+    On the Export File Format page, ensure that Base-64 encoded X.509 (.CER) is selected, and then click Next.
+
+    In the File to Export page, under File name, navigate to a location you'll remember and save the file as P2SRootCert.cer, and then click Next.
+
+    On the Completing the Certificate Export Wizard page, click Finish.
+
+    On the Certificate Export Wizard message box, click OK.
+
+Upload the root certificate public key information
+
+In the PowerShell window, run the following command to declare a variable for the certificate name:
+    
+    PowerShell
+
+    $P2SRootCertName = "P2SRootCert.cer"
+
+Replace the <cert-path> placeholder with the export location of your root certificate and run the following command:
+
+    PowerShell
+
+    $filePathForCert = "<cert-path>\P2SRootCert.cer"
+    $cert = new-object System.Security.Cryptography.X509Certificates.X509Certificate2($filePathForCert)
+    $CertBase64 = [system.convert]::ToBase64String($cert.RawData)
+    $p2srootcert = New-AzVpnClientRootCertificate -Name $P2SRootCertName -PublicCertData $CertBase64
+
+With the group name set, upload the certificate to Azure with the following command.
+
+    PowerShell
+
+    Add-AzVpnClientRootCertificate -VpnClientRootCertificateName $P2SRootCertName -VirtualNetworkGatewayname $GWName -ResourceGroupName $ResourceGroup -PublicCertData $CertBase64
+
+Azure will now recognize this certificate as a trusted root certificate for our virtual network.
+
+Configure the native VPN client
+
+    Run the following command to create VPN client configuration files in .ZIP format.
+    PowerShell
+
+    $profile = New-AzVpnClientConfiguration -ResourceGroupName $ResourceGroup -Name $GWName -AuthenticationMethod "EapTls"
+    $profile.VPNProfileSASUrl
+
+    Copy the URL returned in the output from this command and paste it into your browser. Your browser should start downloading a .ZIP file. Extract the archive contents and put them in a suitable location.
+
+    Some browsers will initially attempt to block downloading this ZIP file as a dangerous download. You will need to override this in your browser to be able to extract the archive contents.
+
+    In the extracted folder, navigate to either the WindowsAmd64 folder (for 64-bit Windows computers) or the WindowsX86 folder (for 32-bit computers).
+
+    If you want to configure a VPN on a non-Windows machine, you can use the certificate and settings files from the Generic folder.
+
+    Double-click on the VpnClientSetup{architecture}.exe file, with {architecture} reflecting your architecture.
+
+    In the Windows protected your PC screen, click More info, and then click Run anyway.
+
+    In the User Account Control dialog box, click Yes.
+
+    In the VNetData dialog box, click Yes.
+
+Connect to Azure
+
+    Press the Windows key, type Settings and press Enter.
+
+    In the Settings window, click Network and Internet.
+
+    In the left-hand pane, click VPN.
+
+    In the right-hand pane, click VNetData, and then click Connect.
+
+    In the VNetData window, click Connect.
+
+    In the next VNetData window, click Continue.
+
+    In the User Account Control message box, click Yes.
+
+If these steps do not work, you may need to restart your computer.
+Verify your connection
+
+    In a new Windows command prompt, run IPCONFIG /ALL.
+
+    Copy the IP address under PPP adapter VNetData, or write it down.
+
+    Confirm that IP address is in the VPNClientAddressPool range of 172.16.201.0/24.
+
+    You have successfully made a connection to the Azure VPN gateway.
+
+You just set up a VPN gateway, allowing you to make an encrypted client connection to a virtual network in Azure. This approach is great with client computers and smaller site-to-site connections.
 
 
 
