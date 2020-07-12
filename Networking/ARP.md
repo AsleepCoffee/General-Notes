@@ -8,7 +8,15 @@ Devices will have an ARP table that will store the IP-MAC pairs and its TTL.
 
 Steps for device: 
 
-Device A is going to send a packet to device B, first it searches its ARP table for device Bs MAC. If its there it sends it with dst L2 addr of device B. If not, then an ARP req is sent on the LAN (src IP: A src MAC: A dst IP: B dst MAC: broadcast). When the device with that IP gets the packet, it responses with DST MAC: A DST IP: A src IP B src MAC B.
+- Device A is going to send a packet to device B, first it searches its ARP table for device Bs MAC. 
+If its there it sends it with dst L2 addr of device B. If not, then an ARP req is sent on the LAN (src IP: A src MAC: A dst IP: B dst MAC: broadcast). 
+When the device with that IP gets the packet, it responses with DST MAC: A DST IP: A src IP B src MAC B.
+
+
+## Gratuitous ARP req and res
+
+- Gratuitous ARP request: A req packet where src and dst IP are set with the IP of the machine that is issuing the packet and the dest MAC is the broadcast address
+- Gratuitous ARP response: an ARP reply that has been sent without being requested.
 
 
 
