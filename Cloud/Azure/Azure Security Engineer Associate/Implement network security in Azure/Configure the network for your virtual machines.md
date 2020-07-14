@@ -659,21 +659,27 @@ Connections into ExpressRoute can be through the following mechanisms:
     Point-to-point Ethernet connection
 
 ExpressRoute capabilities and features are all identical across all of the above connectivity models.
+
 What is layer 3 connectivity?
 
 Microsoft uses an industry-standard dynamic routing protocol (BGP) to exchange routes between your on-premises network, your instances in Azure, and Microsoft public addresses. We establish multiple BGP sessions with your network for different traffic profiles.
+
 Any-to-any (IPVPN) networks
 
 IPVPN providers typically provide connectivity between branch offices and your corporate datacenter over managed layer 3 connections. With ExpressRoute, the Azure datacenters appear as if they were another branch office.
+
 Virtual cross-connection through an Ethernet Exchange
 
 If your organization is co-located with a cloud exchange facility, you request cross-connections to the Microsoft Cloud through your provider's Ethernet exchange. These cross-connections to the Microsoft Cloud can operate at either layer 2 or layer 3 managed connections, as in the networking OSI model.
+
 Point-to-point Ethernet connection
 
 Point-to-point Ethernet links can provide layer 2 or managed layer 3 connections between your on-premises datacenters or offices to the Microsoft Cloud.
+
 How ExpressRoute works
 
 Azure ExpressRoute uses a combination of ExpressRoute circuits and routing domains to provide high-bandwidth connectivity to the Microsoft Cloud.
+
 What are ExpressRoute circuits
 
 An ExpressRoute circuit is the logical connection between your on-premises infrastructure and the Microsoft Cloud. A connectivity provider implements that connection, although some organizations use multiple connectivity providers for redundancy reasons. Each circuit has a fixed bandwidth of either 50, 100, 200 Mbps or 500 Mbps, or 1 Gbps or 10 Gbps, and each of those circuits map to a connectivity provider and a peering location. In addition, each ExpressRoute circuit has default quotas and limits.
@@ -689,6 +695,7 @@ Each circuit can have up to three peerings, which are a pair of BGP sessions tha
 Routing domains
 
 ExpressRoute circuits then map to routing domains, with each ExpressRoute circuit having multiple routing domains. These domains are the same as the three peerings listed above. In an active-active configuration, each pair of routers would have each routing domain configured identically, thus providing high availability. The Azure public and Azure private peering names represent the IP addressing schemes.
+
 Azure private peering
 
 Azure private peering connects to Azure compute services such as virtual machines and cloud services that are deployed with a virtual network. As far as security goes, the private peering domain is simply an extension of your on-premises network into Azure. You then enable bidirectional connectivity between that network and any Azure virtual networks, making the Azure VM IP addresses visible within your internal network.
@@ -696,6 +703,7 @@ Azure private peering connects to Azure compute services such as virtual machine
 Note
 
 You can connect only one virtual network to the private peering domain.
+
 Azure public peering
 
 Azure public peering enables private connections to services that are available on public IP addresses, such as Azure Storage, Azure SQL databases, and Azure web services. With public peering, you can connect to those service public IP addresses without your traffic being routed over the Internet. Connectivity is always from your WAN to Azure, not the other way around. This is also an all-or-nothing approach, as you can't select the services for which you want public peering enabled.
@@ -703,9 +711,11 @@ Azure public peering enables private connections to services that are available 
 Note
 
 For Azure PaaS services, it's recommended to use Microsoft peering rather than public peering.
+
 Microsoft peering
 
 Microsoft peering supports connections to cloud-based SaaS offerings, such as Office 365 and Dynamics 365. This peering option provides bi-directional connectivity between your company's WAN and Microsoft cloud services.
+
 ExpressRoute health
 
 As with most features in Microsoft Azure, you can monitor ExpressRoute connections to ensure that they are performing satisfactorily. Monitoring includes coverage of the following areas:
@@ -718,7 +728,16 @@ The key tool for this monitoring activity is Network Performance Monitor, partic
 
 Azure ExpressRoute is used to create private connections between Azure datacenters and infrastructure on your premises or in a colocation environment. ExpressRoute connections don't go over the public Internet, and they offer more reliability, faster speeds, and lower latencies than typical Internet connections.
 
+Azure offers three primary ways to set up virtual networking:
 
+    Azure virtual networks
+    Azure VPN gateways
+    Azure ExpressRoute
+
+Azure virtual networks can connect resources such as virtual machines and virtual machine scale sets within the same region, enabling them to communicate. 
+Azure virtual networks can also connect to specified Azure service endpoints, such as Azure Storage, databases, and web apps.
+
+Azure VPN gateways can enable communication with on-premises clients or networks over the public Internet, or connect virtual networks in different Azure regions. When you need a highly secure, dedicated route, you can use Azure ExpressRoute. It creates private, high-bandwidth connections to Azure datacenters that achieve the highest levels of reliability and security.
 
 
 
