@@ -593,3 +593,123 @@ Bash
 
 You've now verified that DataServer can access storage, by using the storage service endpoint on the Databases subnet. You've also verified that AppServer can't access storage. This is because this server is on a different subnet, and doesn't have access to the virtual network service endpoint.
 
+
+## Application Gateway and encryption
+
+Transport encryption helps protect application data while it's in transit from users to your servers. This encryption prevents unauthorized users from seeing the transmitted data.
+
+Consider the example of a retail organization that has a new shipping portal. The organization is publishing this portal and making it available over the internet to allow vendors to ship customer items and track status. This portal exposes business and customer data. The data needs to be encrypted between users and the backend application to ensure that it isn't captured by an unauthorized user while it's transmitted over the network. The organization has implemented Azure Application Gateway to load balance traffic. The organization now needs to enable SSL encryption between users and its servers.
+
+Encrypting your data while it's in transit is an important step toward securing your applications. You can purchase certificates from a certificate authority and use them to encrypt the messages that pass in and out of your servers. This prevents unauthorized users from intercepting and examining the information in these messages while they're being transmitted.
+
+In the shipping portal, encryption is important because we're dealing with shipping customer orders. If someone can access the transmitted data, they can view sensitive information, such as customer details or financial account data.
+
+To help secure this data, you can use Azure Application Gateway. It encrypts data that's traversing the network from users to application servers.
+
+Application Gateway and its benefits
+
+Azure Application Gateway is an application delivery controller. It provides features such as load balancing HTTP traffic, web application firewall, and support for SSL encryption of your data. Application Gateway supports encrypting traffic between users and an application gateway, and between application servers and an application gateway.
+
+When you terminate the SSL connection at the application gateway, it offloads the CPU-intensive SSL termination workload from your servers. Also, you don’t need to install certificates and configure SSL on your servers.
+
+If you need end-to-end encryption, Application Gateway can decrypt the traffic on the gateway by using your private key and then re-encrypt again with the public key of the service running in the backend pool.
+
+Exposing your website or web application through the application gateway also means that you don't directly connect your servers to the web. You're exposing only port 80 or port 443 on the application gateway. Your web servers aren't directly accessible from the internet, reducing the attack surface of your infrastructure.
+Application Gateway components
+
+Application Gateway has several components. The main parts for encryption are the frontend port, the listener, and the backend pool.
+
+The following image shows how incoming traffic from a client to Application Gateway over SSL is decrypted and then re-encrypted when it's sent to a server in the backend pool.
+
+Frontend port and listener
+
+Traffic enters the gateway through a frontend port. You can open many ports, and Application Gateway can receive messages on any of these ports. A listener is the first thing that your traffic meets when entering the gateway through a port. It's set up to listen for a specific host name, and a specific port on a specific IP address. The listener can use an SSL certificate to decrypt the traffic that enters the gateway. The listener then uses a rule that you define to direct the incoming requests to a backend pool.
+
+Backend pool
+
+The backend pool contains your application servers. These servers might be virtual machines, a virtual machine scale set, or applications running on Azure App Service. Incoming requests can be load balanced across the servers in this pool. The backend pool has an HTTP setting that references a certificate used to authenticate the backend servers. The gateway re-encrypts the traffic by using this certificate before sending it to one of your servers in the backend pool.
+
+If you're using Azure App Service to host the backend application, you don't need to install any certificates in Application Gateway to connect to the backend pool. All communications are automatically encrypted. Application Gateway trusts the servers because Azure manages them.
+
+## Configure backend pools for encryption
+
+The backend pool contains the servers that implement the application. Azure Application Gateway routes requests to these servers, and can load balance the traffic across these servers.
+
+In the shipping portal, the application servers in the backend pool must use SSL to encrypt the data that passes between Application Gateway and the servers in the backend pool. Application Gateway uses an SSL certificate with a public key to encrypt the data. The servers use the corresponding private key to decrypt the data as it's received. In this unit, you'll see how to create the backend pool and install the necessary certificates in Application Gateway to help protect the messages that are transmitted to and from the backend pool.
+
+Encryption from Application Gateway to the backend pool
+
+A backend pool can reference individual virtual machines, a virtual machine scale set, the IP addresses of real computers (either on-premises or running remotely), or services hosted through Azure App Service. All the servers in the backend pool should be configured in the same way, including their security settings.
+
+If the traffic directed to the backend pool is protected through SSL, each server in the backend pool must provide a suitable certificate. For testing purposes, you can create a self-signed certificate. In a production environment, you should always generate or purchase a certificate that a certificate authority (CA) can authenticate.
+
+There are currently two versions of Application Gateway: v1 and v2. They have similar capabilities but have slightly different implementation details. The v2 version provides additional features and performance improvements.
+Certificate configuration in Application Gateway v1
+
+Application Gateway v1 requires that you install the authentication certificate for the servers in the gateway configuration. This certificate contains the public key that Application Gateway can use to encrypt messages and authenticate your servers. You can create this certificate by exporting it from the server. The application server uses the corresponding private key for decrypting these messages. This private key should be stored only on your application servers.
+
+You can add an authentication certificate to Application Gateway by using the az network application-gateway auth-cert create command from the Azure CLI. The following example illustrates the syntax of this command. The certificate should be in CER (Claim, Evidence, and Reasoning) format.
+Azure CLI
+
+    az network application-gateway auth-cert create \
+        --resource-group <resource group name> \
+        --gateway-name <application gateway name> \
+        --name <certificate name> \
+        --cert-file <path to authentication certificate>
+
+Application Gateway provides other commands that you can use to list and manage authentication certificates. For example:
+
+    The az network application-gateway auth-cert list command shows the certificates that have been installed.
+    The az network application-gateway auth-cert update command can be used to change the certificate.
+    The az network application-gateway auth-cert delete command removes a certificate.
+
+Certificate configuration in Application Gateway v2
+
+Application Gateway v2 has slightly different authentication requirements. You provide the certificate for the certificate authority that has authenticated the SSL certificate for the servers in the backend pool. You add this certificate as a trusted root certificate to Application Gateway. Use the az network application-gateway root-cert create command from the Azure CLI.
+Azure CLI
+
+    az network application-gateway root-cert create \
+          --resource-group <resource group name> \
+          --gateway-name <application gateway name> \
+          --name <certificate name> \
+          --cert-file <path to trusted CA certificate>
+
+If your servers are using a self-signed certificate, add this certificate as the trusted root certificate in Application Gateway.
+HTTP settings
+
+Application Gateway uses a rule to specify how to direct the messages that it receives on its incoming port to the servers in the backend pool. If the servers are using SSL, you must configure the rule to indicate:
+
+That the servers expect traffic through the HTTPS protocol.
+Which certificate to use to encrypt traffic and authenticate the connection to a server.
+
+You define this configuration information by using an HTTP setting.
+
+Define an HTTP setting by using the az network application-gateway http-settings create command in the Azure CLI. The following example shows the syntax for creating a setting that routes traffic by using the HTTPS protocol to port 443 on the servers in the backend pool. If you're using Application Gateway v1, the --auth-certs parameter is the name of the authentication certificate that you added to Application Gateway previously.
+Azure CLI
+
+    az network application-gateway http-settings create \
+        --resource-group <resource group name> \
+        --gateway-name <application gateway name> \
+        --name <HTTPS settings name> \
+        --port 443 \
+        --protocol Https \
+        --auth-certs <certificate name>
+
+If you're using Application Gateway v2, omit the --auth-certs parameter. Application Gateway contacts the backend server. It verifies the authenticity of the certificate presented by the server against the CAs specified by a list of trusted root certificates. If there's no match, Application Gateway won't connect to the backend server and will fail with an HTTP 502 (Bad Gateway) error.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
