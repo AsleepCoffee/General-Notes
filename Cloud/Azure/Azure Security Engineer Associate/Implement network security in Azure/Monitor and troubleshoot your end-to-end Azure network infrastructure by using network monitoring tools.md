@@ -1,10 +1,9 @@
 # Troubleshoot a network by using Network Watcher monitoring and diagnostic tools
 
-Azure Network Watcher includes several tools that you can use to monitor your virtual networks and virtual machines (VMs). To effectively make use of Network Watcher, it's essential to understand all the available options and the purpose of each tool.
-
-In your engineering company, you want to enable your staff to choose the right Network Watcher tool for each troubleshooting task. They need to understand all the options available and the kinds of problems that each tool can solve.
+Azure Network Watcher includes several tools that you can use to monitor your virtual networks and VMs. To effectively make use of Network Watcher, it's essential to understand all the available options and the purpose of each tool.
 
 Here, we'll look at the Network Watcher tool categories, the tools in each category, and how each tool is applied in example use cases.
+
 What is Network Watcher?
 
 Network Watcher is an Azure service that combines tools in a central place to diagnose the health of Azure networks. The Network Watcher tools are divided into two categories:
@@ -39,3 +38,9 @@ You use the Azure portal to view the topology of an Azure network. In the Azure 
     Note
 
     To generate the topology, you need a Network Watcher instance in the same region as the virtual network.
+
+
+
+
+
+
