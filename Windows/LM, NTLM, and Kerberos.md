@@ -1,7 +1,7 @@
 
 [netsec](https://netsec.ws/?p=314)
 
-
+All are windows mechanisms for authenticating network services in a windows environment.
 
 Release order: LM -> NTLM -> NTLMv2 -> Kerberos
 
