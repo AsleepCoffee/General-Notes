@@ -4,10 +4,27 @@
 Release order: LM -> NTLM -> NTLMv2 -> Kerberos
 
 
-LM (Lan Manager) hashes:
+**LM (Lan Manager) hashes:**
+
+Hash is DES.
+Windows procedure to compute Hash: 
+1. password is transformed to upper case 
+2. Add null characters until it is 14 bytes long
+3. Split the password into 2 blocks (7 byte chunks plus a byte of parity)
+4. Each of the 2 keys is used to encrypt the fixed string "KGS!@#$%" (8 byte ciphertext)
+5. The 2 ciphertext are concatenated to form a 16-byte value. 
+
 Originally windows passwords shorter than 15 characters were stored in the Lan Manager (LM) hash format. Some OSes such as Windows 2000, XP and Server 2003 continue to use these hashes unless disabled. Occasionally an OS like Vista may store the LM hash for backwards compatibility with other systems. This hash is simply terrible. It includes several poor design decisions from Microsoft such as splitting the password into two blocks and allowing each to be cracked independently. Through the use of rainbow tables which will be explained later it’s trivial to crack a password stored in a LM hash regardless of complexity. This hash is then stored with the same password calculated in the NT hash format in the following format: ::::::
 
 NT hashes:
+
+Windows procedure to compute Hash: 
+1. the password is converted to UNICODE
+2. MD4 is then used to get a 16-byte long hash
+
+It addresses some LM flaws, but is still considered to be weak. 
+
+However, the NTLM response is sent together with the LM response, most of the time.
 
 Newer Windows operating systems use the NT hash. There is no significant weakness in this hash that sets it apart from any other cryptographic hash function. Cracking methods such as brute force, rainbow tables or word lists are required to recover the password if it’s only stored in the NT format.
 
@@ -37,4 +54,36 @@ From a pentesting perspective:
 
     You CANNOT perform Pass-The-Hash attacks with Net-NTLM hashes.
 
-**You get Net-NTLMv1/v2 (a.k.a NTLMv1/v2) hashes when using tools like Responder or Inveigh. *
+**You get Net-NTLMv1/v2 (a.k.a NTLMv1/v2) hashes when using tools like Responder or Inveigh.**
+
+## How the LM/NTLMv1 authentication protocol works
+
+Used to auth client to a server, where the server has some way to verify the creds sent by the client. 
+
+Same for both:
+
+1. Client sends a request for authentication.
+
+2. Server sends a 8 byte (random value) 
+
+3. Client encrypts the challenge using the password hash and sends it back as a response.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
