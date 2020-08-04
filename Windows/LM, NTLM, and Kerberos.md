@@ -1,6 +1,8 @@
 
 [netsec](https://netsec.ws/?p=314)
 
+
+
 Release order: LM -> NTLM -> NTLMv2 -> Kerberos
 
 
@@ -16,7 +18,7 @@ Windows procedure to compute Hash:
 
 Originally windows passwords shorter than 15 characters were stored in the Lan Manager (LM) hash format. Some OSes such as Windows 2000, XP and Server 2003 continue to use these hashes unless disabled. Occasionally an OS like Vista may store the LM hash for backwards compatibility with other systems. This hash is simply terrible. It includes several poor design decisions from Microsoft such as splitting the password into two blocks and allowing each to be cracked independently. Through the use of rainbow tables which will be explained later it’s trivial to crack a password stored in a LM hash regardless of complexity. This hash is then stored with the same password calculated in the NT hash format in the following format: ::::::
 
-NT hashes:
+**NT hashes (A.K.A NTLM):**
 
 Windows procedure to compute Hash: 
 1. the password is converted to UNICODE
@@ -41,6 +43,8 @@ Newer Windows operating systems use the NT hash. There is no significant weaknes
 Note that users who log into a computer in a domain have their hashes stored in memory until the computer is shutoff or rebooted. This means any user that has logged on prior to a reboot can have its credentials/hashes stolen from memory via [Mimikats](https://github.com/Kahvi-0/Tools-and-Concepts/blob/master/Windows/Mimikatz.md)
 
 ## NTLM vs. NTLMv1/v2 vs. Net-NTLMv1/v2
+
+https://medium.com/@petergombos/lm-ntlm-net-ntlmv2-oh-my-a9b235c58ed4#:~:text=LM%2D%20and%20NT%2Dhashes%20are,confusingly%20also%20known%20as%20NTLM.&text=NTLMv1%2Fv2%20are%20challenge%20response,through%20Brute%20Force%2FDictionary%20attacks.
 
 NTLMv1/v2 is a shorthand for Net-NTLMv1/v2 and hence are the same thing.
 
@@ -68,6 +72,18 @@ Same for both:
 
 3. Client encrypts the challenge using the password hash and sends it back as a response.
 
+Step 3 is the most important part for attacks, this what is attempted to be captured. 
+
+How the client message is built: 
+
+ 1. The 16-byte hash is padded with 5 null bytes to make it 21 bytes string
+ 2. The 21 bytes string is split in 3 blocks, 7 bytes each +1 parity byte. (now 24 bytes total)
+ 3. Each block will be the key to encrypt the server challenge senf during step 2 of the authentication protocol.
+    - In an attack scenario, we impersonate the server and choose the challenge.
+    - Each block encrypts the server challenge with DES
+ 4. Each block now together make up the step 3 client challenge response.
+
+More information: http://davenport.sourceforge.net/ntlm.html#theType3Message
 
 
 
