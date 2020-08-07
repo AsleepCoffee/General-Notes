@@ -86,9 +86,47 @@ How the client message is built:
 More information: http://davenport.sourceforge.net/ntlm.html#theType3Message
 
 
+## NTLMv2
 
+To address security concerns. Since windows Visa it is default. Introduced in Windows NT 4.0, still sues NT hashes but is much improved protocol.
 
+The main diff is the the step 3 message is different. 
 
+NTLMv2 step 3 response is built as follows:
+
+NTLMv2 hash: contains the HMAC-MD5 of the NT hash and the pair <USERNAME,Server>
+ - username is upper case and server is case sensitive.
+
+NTLMv2 response: contains the HMAC-MD5(MTLMv2 hash, <BLOB, Server_challenge>), sent along with the BLOB
+ 
+  - (Server receives hash+blob)
+  - The BLOB contains a client challenge and the timestamp 
+
+Steps for the type 3 message.
+
+<img width="1120" alt="Capture" src="https://user-images.githubusercontent.com/46513413/89692834-c0f56800-d8da-11ea-9fab-a45efde51478.PNG">
+
+How the BLOB is built: 
+
+- BLOB signature (4 bytes)
+- Reserved (4 bytes)
+- timestamp (8 Bytes) 
+- Client nonce (Random 8 bytes)
+- Unknown (4 Bytes)
+- Target Info (Variable length) 
+- Unknown (4 Bytes) 
+
+Security notes: 
+
+- Timestamp casues the response to change everytime
+- Impossible to create rainbow table to gather the NT hash or the password from the NTLMv2 response
+- Diconary doesnt make since as the key is a hash
+- Only possible attack is by brute forcing the HMAC key
+- The NTLMv2 Hash is bound to a particular server and particular username so its not reusable. 
+
+More info:
+- http://davenport.sourceforge.net/ntlm.html#ntlmVersion2
+- http://davenport.sourceforge.net/ntlm.html#theNtlmv2Response
 
 
 
