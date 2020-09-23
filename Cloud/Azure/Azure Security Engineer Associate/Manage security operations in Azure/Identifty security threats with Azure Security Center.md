@@ -75,6 +75,19 @@ With this collected data, Azure Security Center can start making observations ab
 
 # Centralized policy management with Azure Security Center
 
+Policy-based management can streamline IT operations and help to protect the organization by enforcing well-designed policies. Azure Policy lets you define requirements for your Azure subscriptions and tailor them to your type of workload or the sensitivity of your data.
+
+Azure Security Center is fully integrated with Azure Policy. Security Center can monitor policy compliance across all of your subscriptions using a default set of security policies. A security policy defines the set of controls that are recommended for resources within the specified subscription or resource group. These security policies define the desired configuration of your workloads and help to ensure compliance with company or regulatory security requirements. These defaults can be customized and defined to match your specific organizational needs.
+
+Here are a few of the built-in security policies that Security Center monitors:
+
+   - Secure transfer to storage accounts should be enabled
+   - Azure AD administrator for SQL server should be provisioned
+   - Client authentication should use Azure Active Directory
+   - Diagnostics logs in Key Vault should be enabled
+   - System updates should be installed on your machines
+   - Audit missing blob encryption for storage accounts
+   - Just-In-Time network access control should be applied on virtual machines
 
 
 
