@@ -89,6 +89,69 @@ Here are a few of the built-in security policies that Security Center monitors:
    - Audit missing blob encryption for storage accounts
    - Just-In-Time network access control should be applied on virtual machines
 
+By default, all security policies are turned on for each monitored subscription. Security policies and recommendations are tied to each other. If you enable a security policy, such as OS vulnerabilities, that enables recommendations for that policy. In Security Center, you define policies for your Azure subscriptions or resource groups according to your company’s security needs and the types of applications or sensitivity of data in each subscription.
+
+For example, resources used for development or testing might have different security requirements than resources used for production applications. Likewise, applications that use regulated data, like personally identifiable information (PII), might require a higher level of security. Security policies that are enabled in Azure Security Center drive security recommendations and monitoring to help you identify potential vulnerabilities and mitigate threats.
+
+Policies are inherited from the subscription down to the resource groups. However, you can control the security policies individually at the resource group level.
+
+**To modify a security policy at the subscription level or resource group level, you need to be an Owner or Contributor for that subscription.**
+
+You can view the active security policies through the Security Center dashboard through the Security policy view.
+
+https://docs.microsoft.com/en-us/learn/modules/identify-threats-with-azure-security-center/media/3-security-center-policy-mgt.png
+
+Two organizational groups are shown in the image above: management groups and subscriptions. These are taken directly from Azure policy. Selecting one of these elements allows you to drill into the details for that group or subscription.
+
+https://docs.microsoft.com/en-us/learn/modules/identify-threats-with-azure-security-center/media/3-policy-screen.png
+
+In the above image, you can see that System updates is set to AuditIfNotExists. In this subscription, under the free tier, that means all virtual machines (VMs) will be audited to ensure they have the latest security updates applied. Any VMs that fail this check will generate an audit event.
+
+**Changing Azure policy**
+
+Owners and security administrators can edit the default security policy for each of the shown Azure subscriptions and management groups through Azure Policy. The Azure portal is the easiest way to make changes to policy, but you can also leverage a command-line interface (Azure CLI or Azure PowerShell) or the programmatic REST API.
+
+
+**Monitor your security status with Security Center recommendations**
+
+The assigned security policies create security recommendations. These recommendations can help to identify the current security state of your created workloads in Azure. Security Center reviews your security recommendations across all workloads, uses algorithms to determine how critical each recommendation is, and calculates a Secure Score which is displayed on the Overview page. The recommendation Secure Score is a calculation based on the ratio between your healthy resources and your total resources.
+
+You can select the Review your secure score > link to get more information on each subscription and the recommendations to improve your score.
+Here you can identify the severity of the issue, and get help on correcting each violation. In some cases, Security Center can even fix the issue for you through the 1-Click Fix tag.
+
+**Viewing recommendations by category**
+
+Under the RESOURCE SECURITY HYGIENE header in Security Center you can examine specific recommendations based on category. For example, the Compute & apps section of Azure Security Center provides recommendations for Azure VMs, non-Azure computers (standard-tier), App Services, Containers, and VM scale sets.
+
+As in the secure score screen, some recommendations can be fixed directly from the Security Center dashboard while other issues require you to perform some steps on the resource. For example, the System updates should be installed on your machines will only give you the list of computers that need updates. To address this issue you would use a solution such as Windows Update Services (WSUS).
+
+Each recommendation can be selected to get more details. For issues which need manual remediation, you will get a list of steps to perform.
+
+VMs are particularly important to protect as they often have a broader surface attack than other compute resources. Azure Security Center helps you safeguard your virtual machines in Azure by providing visibility into the security settings on each VM. As shown earlier, ASC can examine OS-level settings through the use of a monitor service that it installs into each Windows and Linux VM. With this feature enabled, Security Center can provide several safeguards including:
+
+    OS security settings with the recommended configuration rules
+    System security updates and critical updates that are missing
+    Endpoint protection recommendations
+    Disk encryption validation
+    Vulnerability assessment and remediation
+    Threat detection
+
+**Other categories**
+
+Security Center lists similar sections for Networking, IoT Hubs, Data & storage, Identity & access, and other security products such as the Next Generation Firewall and Web Application Firewall. Try selecting each item in the RESOURCE SECURITY HYGIENE section to see examples of recommendations Security Center makes for each area.
+
+Disabling security recommendations
+
+It's recommended to leave all the security policies enabled, however sometimes a recommendation will be generated that isn't relevant to your environment. You can turn it off by disabling the security policy that is sending the recommendation.
+
+   1. In the Policy & Compliance section, select Security policy.
+   2. Select the subscription or management group that shouldn't show the recommendation.
+  
+  **Note: Remember that a management group applies its policies to its subscriptions. Therefore, if you disable a subscription's policy, and the subscription belongs to a management group that still uses the same policy, then you will continue to receive the policy recommendations. The policy will still be applied from the management level and the recommendations will still be generated.**
+  
+   3. Select the assigned policy:
+   4. In the PARAMETERS section, locate the policy that sends the recommendation you want to disable, and from the dropdown list, select Disabled.
+   5. Select Save to persist your changes. The change can take up to 12 hours to replicate through the Azure infrastructure.
 
 
 
