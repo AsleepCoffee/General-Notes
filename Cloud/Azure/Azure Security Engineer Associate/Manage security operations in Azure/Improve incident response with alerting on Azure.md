@@ -145,25 +145,136 @@ The creation of scaling metric alert rules to monitor multiple resources is no d
 Like dimensions, a scaling metric alert is individual to the resource that triggered it.
 
 
+# Exercise - Use metric alerts to alert on performance issues in your Azure environment
+
+https://docs.microsoft.com/en-us/learn/modules/incident-response-with-alerting-on-azure/4-exercise-metric-alerts
+
+# Use log alerts to alert on events in your application
+
+You can use Azure Monitor to capture important information from log files. These log files can be created by applications, operating systems, other hardware, or Azure services.
+
+As a solution architect, you want to explore ways that monitoring log data can detect issues before they become problems for your customers. You know that Azure Monitor supports the use of log data.
+
+In this unit, you want to understand how the use of log data can improve resilience in your system.
+When to use log alerts
+
+Log alerts use log data to assess the rule logic and, if necessary, trigger an alert. This data can come from any Azure resource: server logs, application server logs, or application logs.
+
+By its nature, log data is historical. So usage is focused on analytics and trends.
+
+You use these types of logs to assess if any of your servers have exceeded their CPU utilization by a given threshold during the last 30 minutes. Or you can evaluate response codes issued on your web application server in the last hour.
+How log alerts work
+
+Log alerts behave in a slightly different way from other alert mechanisms. The first part of a log alert is used to define the log search rule. The rule defines how often it should run, the time period under evaluation, and the query to be run.
+
+When a log search evaluates as positive, an alert record is created and any associated actions are triggered.
+Composition of log search rules
+
+Every log alert has an associated search rule. The composition of these rules is:
+
+    Log query: The query that runs every time the alert rule fires.
+    Time period: The time range for the query.
+    Frequency: How often the query should run.
+    Threshold: The trigger point for an alert to be created.
+
+Log search results are one of two types, number of records or metric measurement.
+Number of records
+
+Consider using the number-of-records type of log search when you're working with an event or event-driven data. Examples are syslog and web app responses.
+
+This type of log search returns a single alert when the number of records in a search result reaches or exceeds the value for the number of records (threshold). For example, when the threshold for the search rule is greater or equal to five, the query results have to return five or more rows of data before the alert is triggered.
+Metric measurement
+
+Metric measurement logs offer the same basic functionality as metric alert logs.
+
+Unlike number-of-records search logs, metric measurement logs require additional criteria to be set:
+
+    Aggregate function: The calculation that will be made against the result data. An example is count or average. The result of the function is called AggregatedValue.
+    Group field: A field by which the result will be grouped. This criterion is used in conjunction with the aggregated value. For example, you might specify that you want the average grouped by computer.
+    Interval: The time interval by which data is aggregated. For example, if you specify 10 minutes, an alert record is created for each aggregated block of 10 minutes.
+    Threshold: A point defined by an aggregated value and the total number of breaches.
+
+Consider using this type of alert when you need to add a level of tolerance to the results found. One use for this type of alert is to respond if a particular trend or pattern is found. For example, if the number of breaches is five, and any server in your group exceeds 85 percent CPU utilization more than five times within the given time period, an alert is fired.
+
+As you can see, metric measurements greatly reduce the volume of alerts that are produced. But give careful consideration when you're setting the threshold parameters, to avoid missing critical alerts.
+
+Stateless nature of log alerts
+
+One of the primary considerations when you're evaluating the use of log alerts is that they are stateless. This means that a log alert will generate new alerts every time the rule criteria are triggered, regardless of whether the alert was previously recorded.
 
 
+# Use activity log alerts to alert on events within your Azure infrastructure
 
+Activity log alerts allow you to be notified when a specific event happens on some Azure resource. For example, you can be notified when someone creates a new VM in a subscription.
 
+An activity log can also include alerts for Azure service health. A company can be notified when service issues or planned maintenance happens on the Azure platform.
 
+As an Azure solution architect, you want to explore the capability to monitor selected Azure resources within your subscription. You'll understand how the resources can be used to improve your team's responsiveness and the stability of your systems.
 
+In this unit, you'll explore the two different kinds of active log alerts. Now that you've seen all the different kinds of alerts you can use in Azure Monitor, you'll see how you can trigger actions for your alerts. Actions might include sending an email or creating an IT Service Management (ITSM) support ticket.
+When to use activity log alerts
 
+So far, you've seen two different types of alerts supported in Azure Monitor. Metric alerts are ideally suited to monitoring for threshold breaches or spotting trends. Log alerts allow for greater analytical monitoring of historical data.
 
+Activity log alerts are designed to work with Azure resources. Typically, you create this type of log to receive notifications when specific changes occur on a resource within your Azure subscription.
 
+There are two types of activity log alerts:
 
+    Specific operations: Apply to resources within your Azure subscription and often have a scope with specific resources or a resource group. You use this type when you need to receive an alert that reports a change to an aspect of your subscription. For example, you can receive an alert if a virtual machine is deleted or new roles are assigned to a user.
+    Service health events: Include notice of incidents and maintenance of target resources.
 
+Composition of an activity log alert
 
+It's important to note that activity log alerts will monitor events only in the subscription where the log alert was created.
 
+Activity log alerts are based on events. So the best approach for defining them is to use Azure Monitor to filter all the events in your subscription - until you find the one that you want. You then select Add activity log alert to begin the creation process.
 
+Like the previous alerts, activity log alerts have their own attributes:
 
+    Category: Administrative, service health, autoscale, policy, or recommendation.
+    Scope: Resource level, resource group level, or subscription level.
+    Resource group: Where the alert rule is saved.
+    Resource type: Namespace for the target of the alert.
+    Operation name: Operation name.
+    Level: Verbose, informational, warning, error, or critical.
+    Status: Started, failed, or succeeded.
+    Event initiated by: The email address or Azure Active Directory identifier (known as the "caller") for the user.
 
+Creating a resource-specific log alert
 
+When you create your activity log alert, you choose Activity Log for the signal type. Then you'll see all the available alerts for the resource you choose. The following screenshot shows all the administrative alerts for Azure VMs. For example, trigger an alert when a VM is powered off.
 
+Changing the monitor service will enable you to reduce the list of options. So choosing Administrative filters all the signals to show only admin-related signals.
 
+![6-example-activity-log-alert](https://user-images.githubusercontent.com/46513413/97606844-a1a43d80-19e6-11eb-9bd3-bac25ab12306.png)
+
+Creating a service health alert
+
+Service health alerts are not like all the other alert types you've seen so far in this module. To create a new alert, on the Azure portal, search for and select Service Health. Then select Health alerts. After you select + Create service health alert, the steps to create the alert are similar to the steps you've seen to create other alerts.
+
+![6-service-health-alerts](https://user-images.githubusercontent.com/46513413/97606990-c7c9dd80-19e6-11eb-8d1d-8c9965017185.png)
+
+The only difference is that you no longer need to select a resource, because the alert is for a whole region in Azure. What you can select is the kind of health event that you want to be alerted on. It's possible to select service issues, planned maintenance, or health advisories, or to choose all of the events. The remaining steps of performing actions and naming the alerts are the same.
+
+Performing actions when an alert happens
+
+When any event is triggered, you can create an associated action in an action group. Action groups allow you to define actions that will be run. You can run one or more actions for each triggered alert.
+
+The available actions are:
+
+    Send an email
+    Send an SMS message
+    Create an Azure app push notification
+    Make a voice call to a number
+    Call an Azure function
+    Trigger a logic app
+    Send a notification to a webhook
+    Create an ITSM ticket
+    Use a runbook (to restart a VM, or scale a VM up or down)
+
+You can also reuse action groups on multiple alerts, after you've created them. For example, after you've created an action to email your company's operations team, you can add that action group to all the service health events.
+
+You can add or create action groups at the same time that you create your alert. You can also edit an existing alert to add an action group after you've created it.
 
 
 
