@@ -276,9 +276,149 @@ You can also reuse action groups on multiple alerts, after you've created them. 
 
 You can add or create action groups at the same time that you create your alert. You can also edit an existing alert to add an action group after you've created it.
 
+# Exercise - Use activity log alerts to alert on events within your Azure infrastructure
+
+Microsoft Learn needs your permission to create Azure resources.
+
+For more information, please check the troubleshooting guidance page.
+
+The shipping company that you work for wants to avoid any future issues with updates to its applications on the Azure platform. To improve the alerting capabilities within Azure, you'll use activity log alerts.
+
+Your goal is to set up the Linux VM and create an activity log monitoring rule to detect when a VM is deleted. You'll then delete the VM to trigger this alert.
+Create the Azure activity log monitor
+
+    Sign in to the Azure portal by using the same account that you activated the sandbox with.
+
+    On the Azure portal menu, select Monitor. Next, select Alerts in the left panel.
+
+    Select + New alert rule.
+
+    Under the Scope section, select Select resource. The Select a resource panel appears.
+
+    The Filter by subscription dropdown should already be populated with Concierge Subscription. In the Filter by resource type dropdown, select Virtual machines.
+
+    You want alerts when any virtual machine in your resource group is deleted. Select the [sandbox resource group name] resource group, and then select Done.
+
+    In the Condition section, select Select condition. The Configure signal logic panel appears.
+
+    In the Configure signal logic panel, in the Search by signal name box, enter Delete. Select Delete Virtual Machine (Microsoft.Compute/virtualMachines).
+
+    You want to receive alerts of all types. Leave Alert logic settings at their default of All, and then select Done.
+
+Add an email alert action
+
+For the previous Azure Monitor alert, you didn't add any actions. You just viewed triggered alerts in the Azure portal. Actions enable you to send emails for notifications, trigger an Azure function, or call a webhook. You'll now add an email alert when VMs are deleted.
+
+    Under Actions, select Select action group. The Select an action group to attach to this alert rule panel appears.
+
+    Select + Create action group. The Create action group page appears.
+
+    Under the Basics tab, enter the following details:
+    Table 1
+    Setting 	Value
+    Subscription 	Concierge Subscription
+    Resource group 	From the dropdown, name of your sandbox resource group
+    Action group name 	Alert the operations team
+    Display name 	AlertOpsTeam
+
+    Under the Notifications tab, enter the following details:
+    Table 2
+    Setting 	Value
+    Notification type 	Email/SMS/Push/Voice
+    Name 	VM was deleted
+
+    Select the Edit pencil icon. The Email/SMS message/Push/Voice panel appears.
+
+    Select Email, and in the Email box, enter your email address, and then select OK.
+
+    On the Create action group page, select Review + create.
+
+    Now that you've defined the rule, select Create.
+
+    The Create alert rule page reappears. In the Actions section, under Alert rule details, provide the following information:
+    Table 3
+    Setting 	Value
+    Alert rule name 	VM was deleted
+    Description 	A VM in your resource group was deleted
+    Save alert rule to resource group 	default resource group
+    Enable alert rule upon creation 	Check - Yes
+
+    Now that you've defined the rule, select Create alert rule.
+
+Recipients added to the action group will receive a notification when they're added to the action group, when the alert is activated, and when the alert is triggered.
+
+It can take up to five minutes for an activity log alert rule to become active. In this exercise, if you delete the virtual machine before this time, the alert rule might not be triggered. Because of this delay, you might not see the same results in the following steps after you delete the VM.
+Delete your virtual machine
+
+To trigger the alert, you need to delete the virtual machine that you created earlier.
+
+    On the Azure portal menu or from the Home page, select Virtual machines. This action shows a list of the virtual machines.
+
+    Select the vm1 virtual machine.
+
+    From the menu bar, select Delete. The Delete Resources panel appears.
+
+    To confirm the deletion, enter yes.
+
+    Select Delete.
+
+View your activity log alerts in Azure Monitor
+
+In the example, you set up an Ubuntu VM, and you created an activity log rule to detect when the VM was deleted. You then deleted a VM from your resource group. You now need to check if an alert was triggered.
+
+    Open your email program. You should have received an email from azure-noreply@microsoft.com.
+
+    Screenshot of alert email
+
+    On the Azure portal menu, select Monitor, and then select Alerts.
+
+    You should see the Sev4 alerts generated from the deletion of the VM.
+
+    Screenshot that shows a completed alert details section
+
+The alert list now shows an alert for the VM that you deleted. The affected resource column tells you which VM was removed.
 
 
+# Use smart groups to reduce alert noise in Azure Monitor
+https://docs.microsoft.com/en-us/learn/modules/incident-response-with-alerting-on-azure/8-smart-groups
 
+In a large environment, Azure Monitor can generate a large number of alerts. It can be hard to see the difference between your critical and nonessential issues.
+
+You want to explore the options available in Azure Monitor. Is there a mechanism that might reduce the alert noise and make the task of managing alerts easier?
+
+In this unit, you'll investigate how to use smart groups, and see how they can help you manage alerts in Azure Monitor.
+What are smart groups?
+
+Smart groups are an automatic feature of Azure Monitor. By using machine learning algorithms, Azure Monitor joins alerts based on repeat occurrence or similarity. Smart groups enable you to address a group of alerts instead of each alert individually.
+
+The name of the smart group (its taxonomy), is assigned automatically, and is the name of the first alert in the group. It's important to assign meaningful names to each alert that you create, because the name of the smart group can't be changed or amended.
+When to use smart groups
+
+Think of smart groups as a dynamic filter applied to all the alerts in Azure Monitor. The machine learning algorithm in Azure Monitor joins alerts based on information, such as historical patterns, similar properties, or structure. Using smart groups can reduce alert noise by more than 90 percent.
+
+The power of smart groups is that they show you all related alerts and give improved analytics. They can often identify a previously unseen root cause.
+Managing smart groups
+
+There are two ways to get to your smart groups: from the Alert Summary page or from the All Alerts page. Next, select Alerts by Smart Group.
+
+
+Either method results in a new page that shows all the smart groups. Selecting a smart group opens its details page, which splits into two sections:
+
+    Summary: Lists all the alerts included in the smart group.
+    History: Provides a history of all the changes made to the smart group.
+
+Screenshot that shows the details page for a smart group
+Smart group states
+
+Smart groups, like regular alerts, have their own state. The state shows the progress of the smart group in the resolution process. Changing the state of a smart group doesn't alter the state of the individual alerts.
+
+To change the state, select Change smart group state.
+
+The states are:
+
+    New: The smart group has been created with a collection of alerts, but it hasn't yet been addressed.
+    Acknowledged: When an admin starts the resolution process, they change the state to this.
+    Closed: When the source of the alert is fixed, the admin changes the state to this.
 
 
 
