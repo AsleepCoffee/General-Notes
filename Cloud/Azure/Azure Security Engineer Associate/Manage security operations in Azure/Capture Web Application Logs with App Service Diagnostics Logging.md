@@ -337,8 +337,75 @@ https://docs.microsoft.com/en-us/learn/modules/capture-application-logs-app-serv
 
 If you have Microsoft Excel on your computer, the log file will automatically open as a worksheet; otherwise, you can open the file using a text editor such as Notepad.
 
+# Exercise - Retrieve Application Log Files using Azure CLI and Kudu
 
+https://docs.microsoft.com/en-us/learn/modules/capture-application-logs-app-service/7-retrieve-application-log-files-from-an-application-using-azure-cli-and-kudu
 
+Your new Web app for Contoso Fashions is nearly ready for some initial pilot testing, and you'd like to review and analyze all the various trace messages that have been saved to your app's log files. But before you can do any review, you need to know how to find the logged information.
+
+In this unit, you'll retrieve log files ready for later offline analysis.
+Retrieve file system logs using Azure CLI
+
+In this step, you'll use Azure CLI to retrieve file system logs to your cloud share storage, and then view these logs.
+
+Note
+
+The full Azure Cloud Shell has a toolbar that includes a file download and upload tool, and you could use this option to download contosofashions.zip to your local computer. This functionality is not currently available in the Microsoft Learn sandbox shell. So, in this exercise, to view the logs from within the Cloud Shell file share, you'll use some Bash tools.
+
+    In the Azure Cloud Shell, to download the logs to contosofashions.zip in the cloud share storage, replacing <your-number> with the random number that was generated to uniquely identify your app, run the following command.
+    Azure CLI
+
+az webapp log download --log-file contosofashions.zip  --resource-group [sandbox resource group name] --name contosofashions<your-number>
+
+In the Azure Cloud Shell, to show the log files contained in the downloaded contosofashions.zip file, run the following command.
+
+zipinfo -1 contosofashions.zip
+
+In the Azure Cloud Shell, to extract just the app log file from the downloaded contosofashions.zip file, run the following command.
+
+unzip -j contosofashions.zip LogFiles/Application/*.txt
+
+In the Azure Cloud Shell, to display the application log file, run the following command.
+
+    code *.txt
+
+    Click in the Azure Cloud Shell, and to close the editor, press Ctrl + Q.
+
+Retrieve file system logs using Kudu
+
+In this step, to download file system logs to your computer, you'll use the Kudu console.
+
+    On the Azure portal menu or from the Home page, select App Services.
+    In the App Services list, select contosofashions<your-number>; and in the Development Tools section, select Advanced Tools; and then on the Advanced Tools pane, select Go.
+    In the new Kudu Services tab, in the Kudu menu, select Debug Console, and then select CMD.
+    In the file explorer section, select LogFiles.
+    For the Application folder, select Download; the logs will be downloaded to your computer as Application.zip.
+    On your computer, open Application.zip, and view the log file; this should be the same logs as you looked at using the Cloud Shell.
+    Close the Kudu Services tab.
+
+Search logs saved in Azure Blob Storage
+
+In this step, you'll open the verbose logs that were saved into your Azure Blob Storage container, and then search for specific log entries.
+
+    On the Azure portal menu or from the Home page, select Storage accounts.
+
+    In the Storage accounts list, select sacontosofashions<your-number>, and then in the top section of the storage account pane, select Storage Explorer (Preview).
+
+    In the Storage Explorer (preview) pane, expand BLOB CONTAINERS, and then select asp logs.
+
+    In the container pane, double-click contosofashions<your-number>, then double-click each of the year, month, and date folders.
+
+    You should now see a folder for each hour that the application has been logging to blob storage. Double-click the hour folder (or the earliest, if there is more than one).
+
+    The folder should contain one or more CSV files; to download it, double-click the largest file (you may need to scroll right to see the file sizes). If you have Microsoft Excel on your computer, the log file will automatically open as a worksheet; otherwise, open the file using a text editor, such as Notepad.
+
+    In the opened log file, search for the following string.
+
+    Warning message
+
+    There should be several occurrences of this message in the log.
+
+    Close the log file.
 
 
 
